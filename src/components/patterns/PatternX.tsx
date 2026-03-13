@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react';
 import { Reveal, useReveal } from '@/components/shared/ScrollUtils';
 import { aboutItems, chefs, restaurants, projects } from '@/lib/content';
-import { TouchRipple, useScrollVelocity, TiltCard, SplitText, ScrollProgressBar, AnimatedCounter } from '@/components/interactive/Effects';
+import { TouchRipple, useScrollVelocity, TiltCard, ScrollProgressBar, AnimatedCounter } from '@/components/interactive/Effects';
 import MagneticButton from '@/components/interactive/MagneticButton';
 import TextScramble from '@/components/interactive/TextScramble';
 
@@ -25,17 +25,24 @@ function SlideIn({ children, from = 'left', delay = 0, className = '' }: {
   );
 }
 
-/* ===== Marquee — 4 copies for seamless loop ===== */
+/* ===== Marquee — brighter with glow ===== */
 function Marquee({ text, speed = 18 }: { text: string; speed?: number }) {
   return (
-    <div className="overflow-hidden py-5 md:py-6 border-y border-nc-gold/[.04]">
+    <div className="overflow-hidden py-5 md:py-6 border-y border-nc-gold/[.06] relative">
+      {/* Side fade masks */}
+      <div className="absolute inset-y-0 left-0 w-16 md:w-24 bg-gradient-to-r from-nc-black to-transparent z-[2] pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-16 md:w-24 bg-gradient-to-l from-nc-black to-transparent z-[2] pointer-events-none" />
+      {/* Subtle glow line behind */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="w-[60%] h-[1px] bg-gradient-to-r from-transparent via-nc-gold/[.12] to-transparent" />
+      </div>
       <motion.div
         animate={{ x: ['0%', '-50%'] }}
         transition={{ duration: speed, repeat: Infinity, ease: 'linear' }}
-        className="flex whitespace-nowrap will-change-transform"
+        className="flex whitespace-nowrap will-change-transform relative z-[1]"
       >
         {[0, 1, 2, 3].map(i => (
-          <span key={i} className="font-bebas text-[clamp(24px,5vw,48px)] text-nc-gold/[.06] tracking-[.1em] mx-6 md:mx-8">
+          <span key={i} className="font-bebas text-[clamp(24px,5vw,48px)] text-nc-gold/[.15] tracking-[.1em] mx-6 md:mx-8" style={{ textShadow: '0 0 30px rgba(184,149,106,0.1)' }}>
             {text}
           </span>
         ))}
@@ -101,9 +108,14 @@ export default function PatternX() {
           <div className="font-ui text-[10px] tracking-[10px] uppercase text-nc-gold mb-8 md:mb-10">
             <TextScramble text="CREATIVE LAB" trigger={mounted} speed={15} />
           </div>
-          <div className="overflow-hidden">
-            <SplitText text="NO CODE" trigger={mounted} charClassName="font-bebas text-[clamp(64px,18vw,160px)] text-nc-white tracking-[.06em] leading-[0.85]" staggerDelay={0.04} initialDelay={0.15} />
-          </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={mounted ? { opacity: 1 } : {}}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="font-bebas text-[clamp(64px,18vw,160px)] text-nc-white tracking-[.06em] leading-[0.85]"
+          >
+            <TextScramble text="NO CODE" trigger={mounted} speed={12} />
+          </motion.div>
           <motion.div initial={{ scaleX: 0 }} animate={mounted ? { scaleX: 1 } : {}} transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }} className="w-16 md:w-20 h-[1px] bg-nc-gold mx-auto mt-6 md:mt-8 mb-5 md:mb-6 origin-center" />
           <motion.p initial={{ opacity: 0, y: 20 }} animate={mounted ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.8 }} className="font-light text-[clamp(12px,3vw,16px)] text-nc-gold/50 tracking-[clamp(2px,1vw,8px)]">
             「No Code」に生きていく
