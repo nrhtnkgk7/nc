@@ -73,3 +73,11 @@ export const restaurants = [
     image: 'bg-gradient-to-br from-[#0a1520] via-[#1a2a3a] to-[#050a12]',
   },
 ];
+
+export const projects = [
+  { title: 'HOTEL THE MITSUI「FORNI」', desc: '5ツ星ラグジュアリーホテルのイタリアンダイニングにて薪窯グリルのレシピ開発・チームマネジメント', year: '2023', client: '三井不動産リゾートマネジメント' },
+  { title: 'ヱスジ苑（SGN）', desc: '「禁牛法」コンセプトのサステナブルヤキニクのメニュー開発', year: '2023', client: 'SG Management' },
+  { title: '白井屋ホテル「the LOUNGE」', desc: 'アートディスティネーション・ホテルのオールデイダイニング監修・スタッフ研修', year: '2023', client: '白井屋ホテル' },
+  { title: 'Purple Carrot', desc: 'Oisixヴィーガンブランドのフードプロデュース。「時々ヴィーガン」なライフスタイルを提案', year: '2022', client: 'オイシックス・ラ・大地' },
+  { title: 'swrl. wine cocktail & kitchen', desc: '世界No.1バーテンダー後閑信吾氏とのコラボレーション。ラテンアメリカ料理ベースのフードプロデュース', year: '2022', client: 'SG Management' },
+];
