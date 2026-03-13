@@ -1,6 +1,5 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import { Reveal, useReveal } from '@/components/shared/ScrollUtils';
@@ -8,8 +7,6 @@ import { aboutItems, chefs, restaurants } from '@/lib/content';
 import { TouchRipple, useScrollVelocity, TiltCard, DragGallery, SplitText, ScrollProgressBar, AnimatedCounter } from '@/components/interactive/Effects';
 import MagneticButton from '@/components/interactive/MagneticButton';
 import TextScramble from '@/components/interactive/TextScramble';
-
-const ParticleHero = dynamic(() => import('@/components/interactive/ParticleHero'), { ssr: false });
 
 export default function PatternX() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -19,7 +16,7 @@ export default function PatternX() {
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
   const velocity = useScrollVelocity();
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setTimeout(() => setMounted(true), 400); }, []);
+  useEffect(() => { setTimeout(() => setMounted(true), 300); }, []);
 
   return (
     <div>
@@ -30,24 +27,31 @@ export default function PatternX() {
         <motion.div style={{ y: heroY, scale: heroScale }} className="absolute inset-0 z-0 bg-[url('/images/hero.jpg')] bg-cover bg-center">
           <div className="absolute inset-0 bg-gradient-to-b from-nc-black/15 via-nc-black/25 to-nc-black/70" />
         </motion.div>
-        <ParticleHero className="z-[1] opacity-50" />
+
+        {/* Animated gradient orbs instead of WebGL particles */}
+        <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
+          <div className="mesh-orb w-[50vw] h-[50vw] top-[-10%] right-[-15%] bg-nc-gold/[.06]" style={{ animationDuration: '25s' }} />
+          <div className="mesh-orb w-[40vw] h-[40vw] bottom-[5%] left-[-10%] bg-nc-gold-dark/[.04]" style={{ animationDuration: '30s', animationDelay: '-8s' }} />
+          <div className="mesh-orb w-[30vw] h-[30vw] top-[40%] left-[30%] bg-nc-gold/[.03]" style={{ animationDuration: '20s', animationDelay: '-4s' }} />
+        </div>
+
         <TouchRipple className="z-[2]" />
 
         <motion.div style={{ opacity: heroOpacity }} className="relative z-[3] text-center">
           <div className="font-ui text-[10px] tracking-[10px] uppercase text-nc-gold mb-10">
-            <TextScramble text="CREATIVE LAB" trigger={mounted} speed={40} />
+            <TextScramble text="CREATIVE LAB" trigger={mounted} speed={15} />
           </div>
           <div className="overflow-hidden">
-            <SplitText text="NO CODE" trigger={mounted} charClassName="font-bebas text-[clamp(64px,18vw,160px)] text-nc-white tracking-[.06em] leading-[0.85]" staggerDelay={0.05} initialDelay={0.3} />
+            <SplitText text="NO CODE" trigger={mounted} charClassName="font-bebas text-[clamp(64px,18vw,160px)] text-nc-white tracking-[.06em] leading-[0.85]" staggerDelay={0.04} initialDelay={0.15} />
           </div>
-          <motion.div initial={{ scaleX: 0 }} animate={mounted ? { scaleX: 1 } : {}} transition={{ delay: 0.9, duration: 1.5, ease: [0.16, 1, 0.3, 1] }} className="w-20 h-[1px] bg-nc-gold mx-auto mt-8 mb-6 origin-center" />
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={mounted ? { opacity: 1, y: 0 } : {}} transition={{ delay: 1.2 }} className="font-light text-[clamp(12px,3vw,16px)] text-nc-gold/50 tracking-[clamp(3px,1vw,8px)]">
+          <motion.div initial={{ scaleX: 0 }} animate={mounted ? { scaleX: 1 } : {}} transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }} className="w-20 h-[1px] bg-nc-gold mx-auto mt-8 mb-6 origin-center" />
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={mounted ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.8 }} className="font-light text-[clamp(12px,3vw,16px)] text-nc-gold/50 tracking-[clamp(3px,1vw,8px)]">
             「No Code」に生きていく
           </motion.p>
         </motion.div>
 
         <MagneticButton className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[3]" strength={0.5}>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }} className="flex flex-col items-center gap-2">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} className="flex flex-col items-center gap-2">
             <motion.div animate={{ y: [0, 12, 0] }} transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }} className="w-1 h-1 rounded-full bg-nc-gold" />
             <div className="w-[1px] h-8 bg-gradient-to-b from-nc-gold to-transparent" />
           </motion.div>
@@ -149,7 +153,7 @@ function AboutBlock({ item, index, velocity }: { item: typeof aboutItems[0]; ind
         <div style={{ transform: `skewY(${skew}deg)`, transition: 'transform 0.15s linear' }}>
           <span className="font-bebas text-[clamp(60px,16vw,100px)] text-nc-gold/[.06] leading-none block mb-[-12px]">{item.num}</span>
           <h3 className="font-medium text-[clamp(18px,4.5vw,22px)] text-nc-white tracking-wider mb-4 leading-relaxed">
-            {isVisible ? <TextScramble text={item.title} trigger={isVisible} speed={25} /> : item.title}
+            {isVisible ? <TextScramble text={item.title} trigger={isVisible} speed={15} /> : item.title}
           </h3>
           <p className="font-light text-[clamp(13px,3.5vw,15px)] text-nc-silver leading-[2.4]">{item.body}</p>
         </div>

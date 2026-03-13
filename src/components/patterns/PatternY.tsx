@@ -1,15 +1,12 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
-import { Reveal } from '@/components/shared/ScrollUtils';
+import { Reveal, useReveal } from '@/components/shared/ScrollUtils';
 import { aboutItems, chefs, restaurants } from '@/lib/content';
 import { TouchRipple, TiltCard, SplitText, ScrollProgressBar, useScrollVelocity } from '@/components/interactive/Effects';
 import TextScramble from '@/components/interactive/TextScramble';
 import MagneticButton from '@/components/interactive/MagneticButton';
-
-const CardSwipe = dynamic(() => import('@/components/interactive/CardSwipe'), { ssr: false });
 
 export default function PatternY() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -18,7 +15,7 @@ export default function PatternY() {
   const heroRotate = useTransform(scrollYProgress, [0, 1], [0, 2]);
   const velocity = useScrollVelocity();
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setTimeout(() => setMounted(true), 400); }, []);
+  useEffect(() => { setTimeout(() => setMounted(true), 300); }, []);
 
   return (
     <div>
@@ -30,10 +27,8 @@ export default function PatternY() {
           <div className="absolute inset-0 bg-gradient-to-b from-nc-black/10 via-nc-black/20 to-nc-black/80" />
         </motion.div>
 
-        {/* Touch ripple */}
         <TouchRipple className="z-[2]" />
 
-        {/* Animated mesh */}
         <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
           <div className="mesh-orb w-[70vw] h-[70vw] top-[-20%] right-[-30%] bg-nc-gold/[.05]" style={{ animationDuration: '18s' }} />
           <div className="mesh-orb w-[50vw] h-[50vw] bottom-[-10%] left-[-20%] bg-nc-gold-dark/[.03]" style={{ animationDuration: '22s', animationDelay: '-7s' }} />
@@ -63,27 +58,23 @@ export default function PatternY() {
           </motion.p>
         </div>
 
-        {/* Corner decorations */}
         {['top-4 left-4', 'top-4 right-4 rotate-90', 'bottom-4 right-4 rotate-180', 'bottom-4 left-4 -rotate-90'].map((pos, i) => (
           <motion.div key={i} initial={{ opacity: 0 }} animate={mounted ? { opacity: 1 } : {}} transition={{ delay: 2 + i * 0.1 }}
             className={`absolute ${pos} w-4 h-4 border-l border-t border-nc-gold/20 z-[3]`} />
         ))}
       </section>
 
-      {/* ===== ABOUT — Card Swipe ===== */}
-      <section className="relative min-h-svh overflow-hidden">
+      {/* ===== ABOUT — Scroll-triggered cards ===== */}
+      <section className="relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="mesh-orb w-[60vw] h-[60vw] top-[20%] left-[-20%] bg-nc-gold/[.06]" style={{ animationDuration: '20s' }} />
         </div>
-        <div className="relative z-[2] py-20 px-6">
+        <div className="relative z-[2] py-20 md:py-32 px-6 max-w-[600px] md:max-w-[1100px] mx-auto">
           <Reveal>
             <div className="font-ui text-[10px] tracking-[5px] uppercase text-nc-gold mb-3">About</div>
-            <h2 className="font-bebas text-[clamp(36px,9vw,56px)] text-nc-white tracking-[.06em] mb-3">ABOUT</h2>
-            <p className="font-ui text-[8px] tracking-[3px] uppercase text-nc-slate mb-10">← SWIPE TO EXPLORE →</p>
+            <h2 className="font-bebas text-[clamp(36px,9vw,56px)] text-nc-white tracking-[.06em] mb-12 md:mb-20">ABOUT NO CODE</h2>
           </Reveal>
-          <Reveal delay={0.2}>
-            <CardSwipe cards={aboutItems} />
-          </Reveal>
+          <ScrollCards items={aboutItems} />
         </div>
       </section>
 
@@ -117,7 +108,7 @@ export default function PatternY() {
         </div>
       </section>
 
-      {/* ===== RESTAURANT — velocity-responsive ===== */}
+      {/* ===== RESTAURANT ===== */}
       <section className="relative py-24 overflow-hidden">
         <div className="relative z-[2] px-6 max-w-[1100px] mx-auto">
           <Reveal>
@@ -146,6 +137,80 @@ export default function PatternY() {
       </section>
 
       <footer className="border-t border-white/[.03] py-8 px-6 text-center text-[10px] text-nc-slate">© 2026 No Code, Inc.</footer>
+    </div>
+  );
+}
+
+/* Scroll-triggered About cards: auto-advance as user scrolls */
+function ScrollCards({ items }: { items: typeof aboutItems }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start center', 'end center'],
+  });
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on('change', (v) => {
+      const idx = Math.min(Math.floor(v * items.length), items.length - 1);
+      setActiveIndex(Math.max(0, idx));
+    });
+    return unsubscribe;
+  }, [scrollYProgress, items.length]);
+
+  return (
+    <div ref={containerRef} className="relative" style={{ minHeight: `${items.length * 60}vh` }}>
+      {/* Sticky card display */}
+      <div className="sticky top-[20vh] md:top-[15vh]">
+        <div className="md:grid md:grid-cols-2 md:gap-16 md:items-center">
+          {/* Image side */}
+          <div className="relative h-[50vw] md:h-[400px] rounded overflow-hidden mb-6 md:mb-0">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeIndex}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className={`absolute inset-0 ${items[activeIndex].image}`}
+              >
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="font-bebas text-white/[.04] text-[100px] md:text-[140px]">{items[activeIndex].num}</span>
+                </div>
+                <div className="absolute bottom-3 right-4 font-ui text-[8px] tracking-[2px] text-white/10">{items[activeIndex].label}</div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Text side */}
+          <div>
+            {/* Progress dots */}
+            <div className="flex gap-3 mb-6">
+              {items.map((_, i) => (
+                <div key={i} className={`h-[2px] transition-all duration-500 ${i === activeIndex ? 'w-8 bg-nc-gold' : 'w-3 bg-nc-gold/20'}`} />
+              ))}
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeIndex}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <span className="font-bebas text-[clamp(48px,14vw,80px)] text-nc-gold/[.06] leading-none block mb-[-8px]">{items[activeIndex].num}</span>
+                <h3 className="font-medium text-[clamp(18px,4.5vw,22px)] text-nc-white tracking-wider mb-4 leading-relaxed">
+                  {items[activeIndex].title}
+                </h3>
+                <p className="font-light text-[clamp(13px,3.5vw,15px)] text-nc-silver leading-[2.4]">
+                  {items[activeIndex].body}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

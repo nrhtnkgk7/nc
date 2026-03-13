@@ -8,7 +8,7 @@ export default function TextScramble({
   text,
   className = '',
   trigger = true,
-  speed = 30,
+  speed = 18,
 }: {
   text: string;
   className?: string;
@@ -23,7 +23,7 @@ export default function TextScramble({
     hasRun.current = true;
 
     let frame = 0;
-    const totalFrames = text.length * 3;
+    const totalFrames = text.length * 2;
 
     const interval = setInterval(() => {
       frame++;
@@ -35,7 +35,7 @@ export default function TextScramble({
           .map((char, i) => {
             if (char === ' ') return ' ';
             const charProgress = i / text.length;
-            if (progress > charProgress + 0.3) return char;
+            if (progress > charProgress + 0.2) return char;
             return chars[Math.floor(Math.random() * chars.length)];
           })
           .join('')
