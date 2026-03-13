@@ -145,9 +145,8 @@ function AboutSection({ item, index }: { item: typeof aboutItems[0]; index: numb
 
       {/* Massive number watermark */}
       <motion.div
-        style={{ x: bgX }}
-        className="absolute font-bebas text-[clamp(180px,45vw,400px)] text-nc-gold/[.02] leading-none pointer-events-none z-0"
-        style={{ top: '-3vh', left: index % 2 === 0 ? '-3vw' : 'auto', right: index % 2 === 1 ? '-3vw' : 'auto' }}>
+        style={{ x: bgX, top: '-3vh', left: index % 2 === 0 ? '-3vw' : 'auto', right: index % 2 === 1 ? '-3vw' : 'auto' }}
+        className="absolute font-bebas text-[clamp(180px,45vw,400px)] text-nc-gold/[.02] leading-none pointer-events-none z-0">
         {item.num}
       </motion.div>
 
