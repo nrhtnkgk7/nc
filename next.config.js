@@ -20,14 +20,3 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-```
-
-変更点は `output: 'export'` の行を削除しただけです。保存したら、pushします。
-```
-git add .
-```
-```
-git commit -m "fix: remove static export for Vercel"
-```
-```
-git push
