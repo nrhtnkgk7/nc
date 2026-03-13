@@ -302,7 +302,12 @@ function ChefBlock({ chef }: { chef: typeof chefs[0] }) {
   return (
     <TiltCard intensity={5}>
       <div className="relative overflow-hidden rounded cursor-pointer" onClick={() => setOpen(!open)}>
-        <motion.div className={`h-[clamp(260px,55vw,420px)] ${chef.image} relative`} whileTap={{ scale: 0.98 }}>
+        <motion.div className="h-[clamp(260px,55vw,420px)] relative" whileTap={{ scale: 0.98 }}>
+          {chef.photo ? (
+            <img src={chef.photo} alt={chef.nameJp} className="absolute inset-0 w-full h-full object-cover object-top" />
+          ) : (
+            <div className={`absolute inset-0 ${chef.image}`} />
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-nc-black/90 via-nc-black/30 to-transparent" />
           <span className="absolute bottom-[-8px] left-4 font-bebas text-[clamp(40px,11vw,80px)] text-white/[.06] tracking-wider pointer-events-none">{chef.hugeName}</span>
         </motion.div>

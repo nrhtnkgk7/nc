@@ -29,6 +29,7 @@ export const chefs = [
     role: 'Owner Chef / Chef+',
     bio: '1980年東京浅草生まれ。22歳で単身渡米し、NYミシュラン三ツ星「Jean-Georges」にて日本人初のスーシェフに就任。帰国後「Jean-Georges Tokyo」シェフ・ド・キュイジーヌ。2018年「The Burn」オープン。現在は「No Code」を主宰し、Chef+として国内外で活動。',
     image: 'bg-gradient-to-b from-[#16161e] via-[#2a2a38] to-[#0c0c14]',
+    photo: '/images/yonezawa.jpg',
     hugeName: 'YONEZAWA',
   },
   {
@@ -37,6 +38,7 @@ export const chefs = [
     role: 'Head Chef',
     bio: 'No Codeのヘッドシェフ。米澤シェフの哲学を共有しながら、独自の感性で季節の食材を表現。緻密な技術と繊細な味覚で、カウンター越しにゲストとの距離を縮める料理を生み出す。',
     image: 'bg-gradient-to-b from-[#1e1616] via-[#382a2a] to-[#140c0c]',
+    photo: '/images/hisamatsu.jpg',
     hugeName: 'HISAMATSU',
   },
 ];
