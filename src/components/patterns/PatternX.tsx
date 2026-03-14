@@ -25,28 +25,40 @@ function SlideIn({ children, from = 'left', delay = 0, className = '' }: {
   );
 }
 
-/* ===== Marquee — brighter with glow ===== */
-function Marquee({ text, speed = 18 }: { text: string; speed?: number }) {
+/* ===== Marquee — Dual counter-scroll ===== */
+function Marquee({ text, sub, speed = 18 }: { text: string; sub?: string; speed?: number }) {
   return (
-    <div className="overflow-hidden py-5 md:py-6 border-y border-nc-gold/[.06] relative">
+    <div className="overflow-hidden py-3 md:py-4 border-y border-nc-gold/[.06] relative"
+      style={{ background: 'linear-gradient(180deg, rgba(184,149,106,0.02) 0%, transparent 30%, transparent 70%, rgba(184,149,106,0.02) 100%)' }}>
       {/* Side fade masks */}
-      <div className="absolute inset-y-0 left-0 w-16 md:w-24 bg-gradient-to-r from-nc-black to-transparent z-[2] pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-16 md:w-24 bg-gradient-to-l from-nc-black to-transparent z-[2] pointer-events-none" />
-      {/* Subtle glow line behind */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-[60%] h-[1px] bg-gradient-to-r from-transparent via-nc-gold/[.12] to-transparent" />
-      </div>
+      <div className="absolute inset-y-0 left-0 w-12 md:w-16 bg-gradient-to-r from-nc-black to-transparent z-[2] pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-12 md:w-16 bg-gradient-to-l from-nc-black to-transparent z-[2] pointer-events-none" />
+      {/* Row 1: main text → left */}
       <motion.div
         animate={{ x: ['0%', '-50%'] }}
         transition={{ duration: speed, repeat: Infinity, ease: 'linear' }}
         className="flex whitespace-nowrap will-change-transform relative z-[1]"
       >
         {[0, 1, 2, 3].map(i => (
-          <span key={i} className="font-bebas text-[clamp(24px,5vw,48px)] text-nc-gold/[.15] tracking-[.1em] mx-6 md:mx-8" style={{ textShadow: '0 0 30px rgba(184,149,106,0.1)' }}>
+          <span key={i} className="font-bebas text-[clamp(22px,4vw,42px)] text-nc-gold/[.2] tracking-[.08em] mx-5 md:mx-6">
             {text}
           </span>
         ))}
       </motion.div>
+      {/* Row 2: sub text → right (counter direction) */}
+      {sub && (
+        <motion.div
+          animate={{ x: ['-50%', '0%'] }}
+          transition={{ duration: speed * 1.3, repeat: Infinity, ease: 'linear' }}
+          className="flex whitespace-nowrap will-change-transform relative z-[1] mt-1"
+        >
+          {[0, 1, 2, 3].map(i => (
+            <span key={i} className="font-ui text-[clamp(10px,2vw,16px)] text-nc-gold/[.08] tracking-[.15em] uppercase mx-5 md:mx-6">
+              {sub}
+            </span>
+          ))}
+        </motion.div>
+      )}
     </div>
   );
 }
@@ -129,7 +141,7 @@ export default function PatternX() {
         </MagneticButton>
       </section>
 
-      <Marquee text="NO CODE — CREATIVE LAB — CHEF+ — 食で未来を創る — NO CODE — CREATIVE LAB — CHEF+ — 食で未来を創る —" speed={18} />
+      <Marquee text="NO CODE — CREATIVE LAB — CHEF+ — 食で未来を創る — NO CODE — CREATIVE LAB — CHEF+ — 食で未来を創る —" sub="Private Dining — Tokyo — Taipei — Bistro — Lamb Specialty — Chef+ — Private Dining — Tokyo — Taipei — Bistro — Lamb Specialty — Chef+ —" speed={18} />
 
       {/* ===== ABOUT ===== */}
       <section id="about" className="relative py-20 md:py-40 overflow-hidden scroll-mt-16">
@@ -150,7 +162,7 @@ export default function PatternX() {
         </div>
       </section>
 
-      <Marquee text="FUMIO YONEZAWA — AKINORI HISAMATSU — JEAN-GEORGES — THE BURN — FUMIO YONEZAWA — AKINORI HISAMATSU —" speed={15} />
+      <Marquee text="FUMIO YONEZAWA — AKINORI HISAMATSU — JEAN-GEORGES — THE BURN — FUMIO YONEZAWA — AKINORI HISAMATSU —" sub="Owner Chef — Head Chef — Sustainability — Vegan Recipes — RED U-35 Gold — Owner Chef — Head Chef —" speed={15} />
 
       {/* ===== CHEF ===== */}
       <section id="chef" className="relative py-20 md:py-32 overflow-hidden scroll-mt-16">
@@ -172,7 +184,7 @@ export default function PatternX() {
         </div>
       </section>
 
-      <Marquee text="NO CODE 西麻布 — NY BISTRO — HITSUJI PUBLIC — NO CODE TAIPEI — NO CODE 西麻布 — NY BISTRO —" speed={20} />
+      <Marquee text="NO CODE 西麻布 — NY BISTRO — HITSUJI PUBLIC — NO CODE TAIPEI — NO CODE 西麻布 — NY BISTRO —" sub="Nishiazabu — Higashibu — Shibuya — Taipei Da'an — Nishiazabu — Higashibu — Shibuya — Taipei Da'an —" speed={20} />
 
       {/* ===== RESTAURANT ===== */}
       <section id="restaurant" className="relative py-20 md:py-32 overflow-hidden scroll-mt-16">
