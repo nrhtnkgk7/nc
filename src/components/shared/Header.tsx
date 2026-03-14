@@ -3,17 +3,30 @@
 import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const menuItems = [
+const mainMenuItems = [
   { label: 'ABOUT', href: '#about' },
   { label: 'CHEF', href: '#chef' },
   { label: 'RESTAURANT', href: '#restaurant' },
   { label: 'PROJECT', href: '#project' },
   { label: 'CONTACT', href: '#contact' },
+  { label: 'TAIPEI', href: '/taipei', isRoute: true },
 ];
 
-export default function Header() {
+const taipeiMenuItems = [
+  { label: 'CONCEPT', href: '#tp-concept' },
+  { label: 'CHEF', href: '#tp-chef' },
+  { label: 'MENU', href: '#tp-menu' },
+  { label: 'INFO', href: '#tp-info' },
+  { label: 'CONTACT', href: '#tp-contact' },
+  { label: 'TOKYO', href: '/', isRoute: true },
+];
+
+export default function Header({ isTaipei = false }: { isTaipei?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const menuItems = isTaipei ? taipeiMenuItems : mainMenuItems;
+  const accentColor = isTaipei ? 'text-nc-tw-gold' : 'text-nc-gold';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -28,13 +41,17 @@ export default function Header() {
     });
   }, []);
 
-  const scrollTo = useCallback((href: string) => {
+  const handleClick = useCallback((href: string, isRoute?: boolean) => {
     setIsOpen(false);
     document.body.style.overflow = '';
-    setTimeout(() => {
-      const el = document.querySelector(href);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 400);
+    if (isRoute) {
+      window.location.href = href;
+    } else {
+      setTimeout(() => {
+        const el = document.querySelector(href);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 400);
+    }
   }, []);
 
   return (
@@ -46,15 +63,16 @@ export default function Header() {
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
         <a
-          href="#"
+          href={isTaipei ? '/taipei' : '/'}
           onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-          className="font-bebas text-lg tracking-[4px] text-nc-white no-underline"
+          className="font-bebas text-lg tracking-[4px] text-nc-white no-underline flex items-baseline gap-2"
         >
           NO CODE
+          {isTaipei && <span className="font-ui text-[8px] tracking-[3px] text-nc-tw-gold/60">TAIPEI</span>}
         </a>
         <button
           onClick={toggle}
-          className="relative w-7 h-4 flex flex-col justify-between"
+          className="relative w-7 h-4 flex flex-col justify-between z-[101]"
           aria-label="Menu"
         >
           <motion.span
@@ -99,12 +117,19 @@ export default function Header() {
                   }}
                   onClick={(e) => {
                     e.preventDefault();
-                    scrollTo(item.href);
+                    handleClick(item.href, item.isRoute);
                   }}
-                  className="font-bebas text-[clamp(36px,8vw,72px)] tracking-[.06em] text-nc-white no-underline py-2 relative group"
+                  className={`font-bebas text-[clamp(32px,7vw,64px)] tracking-[.06em] text-nc-white no-underline py-2 relative group ${
+                    item.isRoute ? 'mt-4' : ''
+                  }`}
                 >
                   {item.label}
-                  <span className="absolute bottom-1 left-1/2 right-1/2 h-[1px] bg-nc-gold transition-all duration-500 group-hover:left-[20%] group-hover:right-[20%]" />
+                  {item.isRoute && (
+                    <span className={`ml-2 font-ui text-[9px] tracking-[2px] ${isTaipei ? 'text-nc-gold/40' : 'text-nc-tw-gold/40'}`}>
+                      {isTaipei ? '東京' : '台北'}
+                    </span>
+                  )}
+                  <span className={`absolute bottom-1 left-1/2 right-1/2 h-[1px] ${isTaipei ? 'bg-nc-tw-gold' : 'bg-nc-gold'} transition-all duration-500 group-hover:left-[20%] group-hover:right-[20%]`} />
                 </motion.a>
               ))}
             </nav>
