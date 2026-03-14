@@ -17,8 +17,15 @@ export default function TextScramble({
 }) {
   const [display, setDisplay] = useState(text.replace(/[^\s]/g, '—'));
   const hasRun = useRef(false);
+  const prevTrigger = useRef(false);
 
   useEffect(() => {
+    // Reset hasRun when trigger goes from false→true (e.g. new text/language)
+    if (trigger && !prevTrigger.current) {
+      hasRun.current = false;
+    }
+    prevTrigger.current = trigger;
+
     if (!trigger || hasRun.current) return;
     hasRun.current = true;
 

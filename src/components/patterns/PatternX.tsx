@@ -8,7 +8,7 @@ import { TouchRipple, useScrollVelocity, TiltCard, ScrollProgressBar, AnimatedCo
 import MagneticButton from '@/components/interactive/MagneticButton';
 import TextScramble from '@/components/interactive/TextScramble';
 
-/* ===== Horizontal slide — reduced distance on mobile ===== */
+/* ===== SlideIn ===== */
 function SlideIn({ children, from = 'left', delay = 0, className = '' }: {
   children: React.ReactNode; from?: 'left' | 'right'; delay?: number; className?: string;
 }) {
@@ -25,37 +25,24 @@ function SlideIn({ children, from = 'left', delay = 0, className = '' }: {
   );
 }
 
-/* ===== Marquee — Dual counter-scroll ===== */
+/* ===== Dual Marquee ===== */
 function Marquee({ text, sub, speed = 18 }: { text: string; sub?: string; speed?: number }) {
   return (
     <div className="overflow-hidden py-3 md:py-4 border-y border-nc-gold/[.06] relative"
       style={{ background: 'linear-gradient(180deg, rgba(184,149,106,0.02) 0%, transparent 30%, transparent 70%, rgba(184,149,106,0.02) 100%)' }}>
-      {/* Side fade masks */}
       <div className="absolute inset-y-0 left-0 w-12 md:w-16 bg-gradient-to-r from-nc-black to-transparent z-[2] pointer-events-none" />
       <div className="absolute inset-y-0 right-0 w-12 md:w-16 bg-gradient-to-l from-nc-black to-transparent z-[2] pointer-events-none" />
-      {/* Row 1: main text → left */}
-      <motion.div
-        animate={{ x: ['0%', '-50%'] }}
-        transition={{ duration: speed, repeat: Infinity, ease: 'linear' }}
-        className="flex whitespace-nowrap will-change-transform relative z-[1]"
-      >
+      <motion.div animate={{ x: ['0%', '-50%'] }} transition={{ duration: speed, repeat: Infinity, ease: 'linear' }}
+        className="flex whitespace-nowrap will-change-transform relative z-[1]">
         {[0, 1, 2, 3].map(i => (
-          <span key={i} className="font-bebas text-[clamp(22px,4vw,42px)] text-nc-gold/[.35] tracking-[.08em] mx-5 md:mx-6">
-            {text}
-          </span>
+          <span key={i} className="font-bebas text-[clamp(22px,4vw,42px)] text-nc-gold/[.35] tracking-[.08em] mx-5 md:mx-6">{text}</span>
         ))}
       </motion.div>
-      {/* Row 2: sub text → right (counter direction) */}
       {sub && (
-        <motion.div
-          animate={{ x: ['-50%', '0%'] }}
-          transition={{ duration: speed * 1.3, repeat: Infinity, ease: 'linear' }}
-          className="flex whitespace-nowrap will-change-transform relative z-[1] mt-1"
-        >
+        <motion.div animate={{ x: ['-50%', '0%'] }} transition={{ duration: speed * 1.3, repeat: Infinity, ease: 'linear' }}
+          className="flex whitespace-nowrap will-change-transform relative z-[1] mt-1">
           {[0, 1, 2, 3].map(i => (
-            <span key={i} className="font-ui text-[clamp(10px,2vw,16px)] text-nc-gold/[.18] tracking-[.15em] uppercase mx-5 md:mx-6">
-              {sub}
-            </span>
+            <span key={i} className="font-ui text-[clamp(10px,2vw,16px)] text-nc-gold/[.18] tracking-[.15em] uppercase mx-5 md:mx-6">{sub}</span>
           ))}
         </motion.div>
       )}
@@ -63,7 +50,7 @@ function Marquee({ text, sub, speed = 18 }: { text: string; sub?: string; speed?
   );
 }
 
-/* ===== Back to top button ===== */
+/* ===== BackToTop ===== */
 function BackToTop() {
   const [show, setShow] = useState(false);
   useEffect(() => {
@@ -71,18 +58,13 @@ function BackToTop() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
   return (
     <AnimatePresence>
       {show && (
-        <motion.button
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
+        <motion.button initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="fixed bottom-6 right-6 z-[90] w-10 h-10 rounded-full bg-nc-gold/10 border border-nc-gold/20 flex items-center justify-center backdrop-blur-sm hover:bg-nc-gold/20 transition-colors"
-          aria-label="Back to top"
-        >
+          aria-label="Back to top">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 12V2M2 6L7 1L12 6" stroke="#B8956A" strokeWidth="1" /></svg>
         </motion.button>
       )}
@@ -120,12 +102,8 @@ export default function PatternX() {
           <div className="font-ui text-[10px] tracking-[10px] uppercase text-nc-gold mb-8 md:mb-10">
             <TextScramble text="CREATIVE LAB" trigger={mounted} speed={30} />
           </div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={mounted ? { opacity: 1 } : {}}
-            transition={{ delay: 0.1, duration: 0.6 }}
-            className="font-bebas text-[clamp(64px,18vw,160px)] text-nc-white tracking-[.06em] leading-[0.85]"
-          >
+          <motion.div initial={{ opacity: 0 }} animate={mounted ? { opacity: 1 } : {}} transition={{ delay: 0.1, duration: 0.6 }}
+            className="font-bebas text-[clamp(64px,18vw,160px)] text-nc-white tracking-[.06em] leading-[0.85]">
             <TextScramble text="NO CODE" trigger={mounted} speed={28} />
           </motion.div>
           <motion.div initial={{ scaleX: 0 }} animate={mounted ? { scaleX: 1 } : {}} transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }} className="w-16 md:w-20 h-[1px] bg-nc-gold mx-auto mt-6 md:mt-8 mb-5 md:mb-6 origin-center" />
@@ -261,16 +239,12 @@ export default function PatternX() {
             <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
               <nav className="flex flex-wrap gap-x-5 gap-y-2">
                 {['About', 'Chef', 'Restaurant', 'Project', 'Contact'].map(item => (
-                  <a key={item} href={`#${item.toLowerCase()}`} className="font-ui text-[9px] tracking-[2px] uppercase text-nc-slate hover:text-nc-gold transition-colors">
-                    {item}
-                  </a>
+                  <a key={item} href={`#${item.toLowerCase()}`} className="font-ui text-[9px] tracking-[2px] uppercase text-nc-slate hover:text-nc-gold transition-colors">{item}</a>
                 ))}
               </nav>
               <div className="flex gap-5">
                 {['Instagram', 'Facebook'].map(s => (
-                  <a key={s} href="#" className="font-ui text-[9px] tracking-[2px] uppercase text-nc-slate hover:text-nc-gold transition-colors">
-                    {s}
-                  </a>
+                  <a key={s} href="#" className="font-ui text-[9px] tracking-[2px] uppercase text-nc-slate hover:text-nc-gold transition-colors">{s}</a>
                 ))}
               </div>
             </div>
@@ -285,21 +259,42 @@ export default function PatternX() {
   );
 }
 
-/* ===== ABOUT BLOCK ===== */
+/* ===== ABOUT BLOCK — text has its own visibility observer ===== */
 function AboutBlock({ item, index, velocity }: { item: typeof aboutItems[0]; index: number; velocity: number }) {
-  const { ref, isVisible } = useReveal();
   const skew = Math.min(velocity * 3, 4) * (index % 2 === 0 ? -0.3 : 0.3);
   const fromDir = index % 2 === 0 ? 'left' : 'right';
 
+  // Separate visibility for the TEXT section (higher threshold)
+  const textRef = useRef<HTMLDivElement>(null);
+  const [textVisible, setTextVisible] = useState(false);
+  useEffect(() => {
+    const el = textRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTextVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.5, rootMargin: '0px 0px 0px 0px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Image visibility (standard)
+  const { ref: imgRef, isVisible: imgVisible } = useReveal();
+
   return (
-    <div ref={ref}>
+    <div>
       <div className={`md:grid md:grid-cols-2 md:gap-12 lg:gap-16 md:items-center ${index % 2 === 1 ? 'md:[direction:rtl] md:[&>*]:[direction:ltr]' : ''}`}>
         <SlideIn from={fromDir} delay={0} className="mb-5 md:mb-0">
           <TiltCard intensity={6}>
-            <div className={`h-[52vw] md:h-[400px] rounded overflow-hidden relative ${item.image}`}>
+            <div ref={imgRef} className={`h-[52vw] md:h-[400px] rounded overflow-hidden relative ${item.image}`}>
               <div className="absolute inset-0 flex items-center justify-center">
                 <span className="font-bebas text-white/[.04] text-[80px] md:text-[140px]">
-                  <AnimatedCounter value={item.num} trigger={isVisible} />
+                  <AnimatedCounter value={item.num} trigger={imgVisible} />
                 </span>
               </div>
               <div className="absolute bottom-3 right-4 font-ui text-[8px] tracking-[2px] text-white/10">{item.label}</div>
@@ -307,10 +302,10 @@ function AboutBlock({ item, index, velocity }: { item: typeof aboutItems[0]; ind
           </TiltCard>
         </SlideIn>
         <SlideIn from={fromDir === 'left' ? 'right' : 'left'} delay={0.12}>
-          <div style={{ transform: `skewY(${skew}deg)`, transition: 'transform 0.15s linear' }}>
+          <div ref={textRef} style={{ transform: `skewY(${skew}deg)`, transition: 'transform 0.15s linear' }}>
             <span className="font-bebas text-[clamp(48px,14vw,100px)] text-nc-gold/[.06] leading-none block mb-[-8px] md:mb-[-12px]">{item.num}</span>
             <h3 className="font-medium text-[clamp(17px,4.5vw,22px)] text-nc-white tracking-wider mb-3 md:mb-4 leading-relaxed">
-              {isVisible ? <TextScramble text={item.title} trigger={isVisible} speed={28} /> : item.title}
+              <TextScramble text={item.title} trigger={textVisible} speed={28} />
             </h3>
             <p className="font-light text-[clamp(13px,3.5vw,15px)] text-nc-silver leading-[2.2] md:leading-[2.4]">{item.body}</p>
           </div>
@@ -342,35 +337,23 @@ function ChefBlock({ chef }: { chef: typeof chefs[0] }) {
           <motion.div animate={{ height: open ? 'auto' : 0, opacity: open ? 1 : 0 }} className="overflow-hidden">
             <p className="text-[clamp(11px,2.8vw,13px)] text-nc-slate leading-[2] pb-2">{chef.bio}</p>
           </motion.div>
-          <motion.span animate={{ opacity: open ? 0 : 1 }} className="font-ui text-[7px] md:text-[8px] tracking-[2px] uppercase text-nc-gold/40">
-            TAP FOR MORE
-          </motion.span>
+          <motion.span animate={{ opacity: open ? 0 : 1 }} className="font-ui text-[7px] md:text-[8px] tracking-[2px] uppercase text-nc-gold/40">TAP FOR MORE</motion.span>
         </div>
       </div>
     </TiltCard>
   );
 }
 
-/* ===== RESTAURANT CARD — tap-friendly ===== */
+/* ===== RESTAURANT CARD ===== */
 function RestCard({ restaurant: r, index: i }: { restaurant: typeof restaurants[0]; index: number }) {
   const [expanded, setExpanded] = useState(false);
-
   return (
     <Reveal delay={i * 0.08} animation="scale">
       <TiltCard intensity={4}>
-        <motion.div
-          whileTap={{ scale: 0.97 }}
-          className="bg-white/[.02] rounded overflow-hidden relative cursor-pointer"
-          onClick={() => setExpanded(!expanded)}
-          onMouseEnter={() => setExpanded(true)}
-          onMouseLeave={() => setExpanded(false)}
-        >
+        <motion.div whileTap={{ scale: 0.97 }} className="bg-white/[.02] rounded overflow-hidden relative cursor-pointer"
+          onClick={() => setExpanded(!expanded)} onMouseEnter={() => setExpanded(true)} onMouseLeave={() => setExpanded(false)}>
           <div className={`h-[clamp(120px,26vw,200px)] ${r.image} relative overflow-hidden`}>
-            <motion.div
-              animate={{ scale: expanded ? 1.06 : 1 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0 bg-inherit"
-            />
+            <motion.div animate={{ scale: expanded ? 1.06 : 1 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="absolute inset-0 bg-inherit" />
             <span className="absolute bottom-2 left-3 font-bebas text-[28px] md:text-[32px] text-white/[.04] relative z-[1]">{String(i + 1).padStart(2, '0')}</span>
             <div className="absolute inset-0 bg-gradient-to-t from-nc-black/40 to-transparent z-[1]" />
           </div>
@@ -380,13 +363,8 @@ function RestCard({ restaurant: r, index: i }: { restaurant: typeof restaurants[
             <div className="text-[9px] md:text-[10px] text-nc-slate mb-1">{r.sub}</div>
             <AnimatePresence>
               {expanded && r.address && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="overflow-hidden"
-                >
+                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }} className="overflow-hidden">
                   <div className="pt-2 mt-1 border-t border-nc-gold/[.08]">
                     <p className="text-[8px] md:text-[9px] text-nc-slate leading-[1.7]">{r.address}</p>
                     {r.hours && <p className="text-[8px] md:text-[9px] text-nc-slate leading-[1.7]">{r.hours}</p>}
@@ -404,13 +382,10 @@ function RestCard({ restaurant: r, index: i }: { restaurant: typeof restaurants[
 /* ===== PROJECT ROW ===== */
 function ProjectRow({ project: p }: { project: typeof projects[0] }) {
   const [expanded, setExpanded] = useState(false);
-
   return (
     <motion.div
       className="flex items-center gap-3 md:gap-6 p-3 md:p-5 bg-white/[.02] rounded border border-nc-gold/[.04] cursor-pointer group hover:border-nc-gold/[.12] active:border-nc-gold/[.15] transition-colors duration-500"
-      onClick={() => setExpanded(!expanded)}
-      whileTap={{ scale: 0.99 }}
-    >
+      onClick={() => setExpanded(!expanded)} whileTap={{ scale: 0.99 }}>
       <div className="flex-shrink-0 w-[clamp(40px,11vw,56px)] h-[clamp(40px,11vw,56px)] rounded bg-nc-gold/[.06] flex items-center justify-center">
         <span className="font-bebas text-[clamp(14px,3.5vw,20px)] text-nc-gold/60">{p.year}</span>
       </div>
@@ -418,14 +393,8 @@ function ProjectRow({ project: p }: { project: typeof projects[0] }) {
         <div className="font-bebas text-[clamp(14px,3.8vw,22px)] text-nc-white leading-tight truncate">{p.title}</div>
         <AnimatePresence mode="wait">
           {expanded ? (
-            <motion.div
-              key="expanded"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="overflow-hidden"
-            >
+            <motion.div key="exp" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="overflow-hidden">
               <p className="text-[clamp(11px,2.8vw,13px)] text-nc-silver leading-[2] mt-1">{p.desc}</p>
               {p.client && <p className="text-[10px] text-nc-slate mt-1">Client: {p.client}</p>}
             </motion.div>
