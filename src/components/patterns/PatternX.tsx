@@ -40,7 +40,7 @@ function Marquee({ text, sub, speed = 18 }: { text: string; sub?: string; speed?
         className="flex whitespace-nowrap will-change-transform relative z-[1]"
       >
         {[0, 1, 2, 3].map(i => (
-          <span key={i} className="font-bebas text-[clamp(22px,4vw,42px)] text-nc-gold/[.2] tracking-[.08em] mx-5 md:mx-6">
+          <span key={i} className="font-bebas text-[clamp(22px,4vw,42px)] text-nc-gold/[.35] tracking-[.08em] mx-5 md:mx-6">
             {text}
           </span>
         ))}
@@ -53,7 +53,7 @@ function Marquee({ text, sub, speed = 18 }: { text: string; sub?: string; speed?
           className="flex whitespace-nowrap will-change-transform relative z-[1] mt-1"
         >
           {[0, 1, 2, 3].map(i => (
-            <span key={i} className="font-ui text-[clamp(10px,2vw,16px)] text-nc-gold/[.08] tracking-[.15em] uppercase mx-5 md:mx-6">
+            <span key={i} className="font-ui text-[clamp(10px,2vw,16px)] text-nc-gold/[.18] tracking-[.15em] uppercase mx-5 md:mx-6">
               {sub}
             </span>
           ))}
