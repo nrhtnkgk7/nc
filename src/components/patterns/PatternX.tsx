@@ -106,7 +106,7 @@ export default function PatternX() {
         <TouchRipple className="z-[2]" />
         <motion.div style={{ opacity: heroOpacity }} className="relative z-[3] text-center px-4">
           <div className="font-ui text-[10px] tracking-[10px] uppercase text-nc-gold mb-8 md:mb-10">
-            <TextScramble text="CREATIVE LAB" trigger={mounted} speed={15} />
+            <TextScramble text="CREATIVE LAB" trigger={mounted} speed={30} />
           </div>
           <motion.div
             initial={{ opacity: 0 }}
@@ -114,7 +114,7 @@ export default function PatternX() {
             transition={{ delay: 0.1, duration: 0.6 }}
             className="font-bebas text-[clamp(64px,18vw,160px)] text-nc-white tracking-[.06em] leading-[0.85]"
           >
-            <TextScramble text="NO CODE" trigger={mounted} speed={12} />
+            <TextScramble text="NO CODE" trigger={mounted} speed={28} />
           </motion.div>
           <motion.div initial={{ scaleX: 0 }} animate={mounted ? { scaleX: 1 } : {}} transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }} className="w-16 md:w-20 h-[1px] bg-nc-gold mx-auto mt-6 md:mt-8 mb-5 md:mb-6 origin-center" />
           <motion.p initial={{ opacity: 0, y: 20 }} animate={mounted ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.8 }} className="font-light text-[clamp(12px,3vw,16px)] text-nc-gold/50 tracking-[clamp(2px,1vw,8px)]">
@@ -298,7 +298,7 @@ function AboutBlock({ item, index, velocity }: { item: typeof aboutItems[0]; ind
           <div style={{ transform: `skewY(${skew}deg)`, transition: 'transform 0.15s linear' }}>
             <span className="font-bebas text-[clamp(48px,14vw,100px)] text-nc-gold/[.06] leading-none block mb-[-8px] md:mb-[-12px]">{item.num}</span>
             <h3 className="font-medium text-[clamp(17px,4.5vw,22px)] text-nc-white tracking-wider mb-3 md:mb-4 leading-relaxed">
-              {isVisible ? <TextScramble text={item.title} trigger={isVisible} speed={15} /> : item.title}
+              {isVisible ? <TextScramble text={item.title} trigger={isVisible} speed={28} /> : item.title}
             </h3>
             <p className="font-light text-[clamp(13px,3.5vw,15px)] text-nc-silver leading-[2.2] md:leading-[2.4]">{item.body}</p>
           </div>

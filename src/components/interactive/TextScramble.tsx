@@ -8,7 +8,7 @@ export default function TextScramble({
   text,
   className = '',
   trigger = true,
-  speed = 18,
+  speed = 30,
 }: {
   text: string;
   className?: string;
@@ -23,7 +23,7 @@ export default function TextScramble({
     hasRun.current = true;
 
     let frame = 0;
-    const totalFrames = text.length * 2;
+    const totalFrames = Math.round(text.length * 2.5);
 
     const interval = setInterval(() => {
       frame++;
