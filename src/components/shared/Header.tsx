@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const mainMenuItems = [
@@ -24,9 +24,9 @@ const taipeiMenuItems = [
 export default function Header({ isTaipei = false }: { isTaipei?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const scrollPosRef = useRef(0);
 
   const menuItems = isTaipei ? taipeiMenuItems : mainMenuItems;
-  const accentColor = isTaipei ? 'text-nc-tw-gold' : 'text-nc-gold';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -36,21 +36,40 @@ export default function Header({ isTaipei = false }: { isTaipei?: boolean }) {
 
   const toggle = useCallback(() => {
     setIsOpen(prev => {
-      document.body.style.overflow = !prev ? 'hidden' : '';
+      if (!prev) {
+        scrollPosRef.current = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollPosRef.current}px`;
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        document.body.style.overflow = '';
+        window.scrollTo(0, scrollPosRef.current);
+      }
       return !prev;
     });
   }, []);
 
   const handleClick = useCallback((href: string, isRoute?: boolean) => {
     setIsOpen(false);
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
     document.body.style.overflow = '';
+    window.scrollTo(0, scrollPosRef.current);
     if (isRoute) {
       window.location.href = href;
     } else {
       setTimeout(() => {
         const el = document.querySelector(href);
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 400);
+      }, 100);
     }
   }, []);
 
@@ -75,54 +94,22 @@ export default function Header({ isTaipei = false }: { isTaipei?: boolean }) {
           className="relative w-7 h-4 flex flex-col justify-between z-[101]"
           aria-label="Menu"
         >
-          <motion.span
-            animate={isOpen ? { rotate: 45, y: 7.5 } : { rotate: 0, y: 0 }}
-            className="block w-full h-[1px] bg-nc-white origin-center"
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          />
-          <motion.span
-            animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
-            className="block w-full h-[1px] bg-nc-white"
-            transition={{ duration: 0.3 }}
-          />
-          <motion.span
-            animate={isOpen ? { rotate: -45, y: -7.5 } : { rotate: 0, y: 0 }}
-            className="block w-full h-[1px] bg-nc-white origin-center"
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          />
+          <motion.span animate={isOpen ? { rotate: 45, y: 7.5 } : { rotate: 0, y: 0 }} className="block w-full h-[1px] bg-nc-white origin-center" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} />
+          <motion.span animate={isOpen ? { opacity: 0 } : { opacity: 1 }} className="block w-full h-[1px] bg-nc-white" transition={{ duration: 0.3 }} />
+          <motion.span animate={isOpen ? { rotate: -45, y: -7.5 } : { rotate: 0, y: 0 }} className="block w-full h-[1px] bg-nc-white origin-center" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} />
         </button>
       </header>
-
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[99] bg-nc-black/[.98] backdrop-blur-3xl flex items-center justify-center"
-          >
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[99] bg-nc-black/[.98] flex items-center justify-center">
             <nav className="text-center flex flex-col">
               {menuItems.map((item, i) => (
-                <motion.a
-                  key={item.label}
-                  href={item.href}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{
-                    delay: 0.05 + i * 0.05,
-                    duration: 0.5,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleClick(item.href, item.isRoute);
-                  }}
-                  className={`font-bebas text-[clamp(32px,7vw,64px)] tracking-[.06em] text-nc-white no-underline py-2 relative group ${
-                    item.isRoute ? 'mt-4' : ''
-                  }`}
-                >
+                <motion.a key={item.label} href={item.href}
+                  initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
+                  transition={{ delay: 0.05 + i * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  onClick={(e) => { e.preventDefault(); handleClick(item.href, item.isRoute); }}
+                  className={`font-bebas text-[clamp(32px,7vw,64px)] tracking-[.06em] text-nc-white no-underline py-2 relative group ${item.isRoute ? 'mt-4' : ''}`}>
                   {item.label}
                   {item.isRoute && (
                     <span className={`ml-2 font-ui text-[9px] tracking-[2px] ${isTaipei ? 'text-nc-gold/40' : 'text-nc-tw-gold/40'}`}>
@@ -135,9 +122,7 @@ export default function Header({ isTaipei = false }: { isTaipei?: boolean }) {
             </nav>
             <div className="absolute bottom-12 flex gap-8" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
               {['Instagram', 'Facebook'].map(s => (
-                <a key={s} href="#" className="font-ui text-[10px] tracking-[3px] uppercase text-nc-slate hover:text-nc-gold transition-colors">
-                  {s}
-                </a>
+                <a key={s} href="#" className="font-ui text-[10px] tracking-[3px] uppercase text-nc-slate hover:text-nc-gold active:text-nc-gold transition-colors">{s}</a>
               ))}
             </div>
           </motion.div>

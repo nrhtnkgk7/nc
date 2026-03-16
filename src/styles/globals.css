@@ -7,31 +7,23 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
   }
   body {
     @apply bg-nc-black text-nc-pearl;
     font-family: 'Noto Sans JP', sans-serif;
-    padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   ::selection {
     background: rgba(184, 149, 106, 0.3);
     color: #F0EDE8;
   }
-  /* Prevent overscroll bounce on iOS */
-  html { overscroll-behavior: none; }
 }
 
 /* Lenis smooth scroll */
-html.lenis, html.lenis body {
-  height: auto;
-}
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: hidden; }
 
 /* Film grain overlay */
@@ -45,6 +37,10 @@ html.lenis, html.lenis body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
   background-repeat: repeat;
 }
+/* Disable grain on low-perf mobile */
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+  .grain-overlay { display: none; }
+}
 
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 3px; }
@@ -57,58 +53,39 @@ html.lenis, html.lenis body {
   transform: translateY(50px);
   transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.reveal-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal-up.visible { opacity: 1; transform: translateY(0); }
+
 .reveal-left {
   opacity: 0;
   transform: translateX(-50px);
   transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.reveal-left.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+
 .reveal-right {
   opacity: 0;
   transform: translateX(50px);
   transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.reveal-right.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
 .reveal-scale {
   opacity: 0;
   transform: scale(0.92);
   transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.reveal-scale.visible {
-  opacity: 1;
-  transform: scale(1);
-}
+.reveal-scale.visible { opacity: 1; transform: scale(1); }
+
 .reveal-clip {
   clip-path: inset(100% 0 0 0);
   transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.reveal-clip.visible {
-  clip-path: inset(0);
-}
+.reveal-clip.visible { clip-path: inset(0); }
 
-/* Stagger delay utilities */
+/* Stagger delays */
 .delay-1 { transition-delay: 0.1s; }
 .delay-2 { transition-delay: 0.2s; }
 .delay-3 { transition-delay: 0.3s; }
-.delay-4 { transition-delay: 0.4s; }
-.delay-5 { transition-delay: 0.5s; }
-.delay-6 { transition-delay: 0.6s; }
-
-/* Magnetic button hover */
-.magnetic-area {
-  position: relative;
-  display: inline-block;
-}
 
 /* Mesh gradient orb */
 .mesh-orb {
@@ -116,7 +93,6 @@ html.lenis, html.lenis body {
   border-radius: 50%;
   filter: blur(80px);
   animation: orbFloat 14s infinite alternate cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
   pointer-events: none;
 }
 @keyframes orbFloat {
@@ -126,23 +102,21 @@ html.lenis, html.lenis body {
   100% { transform: translate(4%, -4%) scale(1.04); }
 }
 
-/* Reduce motion for accessibility */
+/* Reduce motion for accessibility & performance */
 @media (prefers-reduced-motion: reduce) {
   .mesh-orb { animation: none; }
   .reveal-up, .reveal-left, .reveal-right, .reveal-scale { transition-duration: 0.01s; }
   .reveal-clip { transition-duration: 0.01s; }
+  .grain-overlay { display: none; }
 }
 
-/* WebGL canvas container */
-.webgl-container {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
+/* Reduce GPU load on mobile: max 2 orbs animate */
+@media (max-width: 768px) {
+  .mesh-orb:nth-child(n+3) { animation: none; opacity: 0.5; }
 }
-.webgl-container canvas {
-  pointer-events: auto;
-}
+
+/* Scroll margin for anchor links */
+[id] { scroll-margin-top: 4rem; }
 
 /* Card swipe */
 .swipe-card {
@@ -151,10 +125,4 @@ html.lenis, html.lenis body {
   backface-visibility: hidden;
   -webkit-tap-highlight-color: transparent;
   touch-action: pan-y;
-  will-change: transform;
-}
-
-/* Smooth anchor scrolling offset */
-[id] {
-  scroll-margin-top: 4rem;
 }

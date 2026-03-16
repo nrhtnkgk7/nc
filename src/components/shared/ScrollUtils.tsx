@@ -9,7 +9,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      touchMultiplier: 2,
+      touchMultiplier: 1.5,
     });
 
     function raf(time: number) {
@@ -66,13 +66,13 @@ export function useScrollProgress() {
   return progress;
 }
 
-// ===== Tilt on Device Motion =====
+// ===== Device Tilt =====
 export function useDeviceTilt() {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handler = (e: DeviceOrientationEvent) => {
-      const x = (e.gamma || 0) / 45; // -1 to 1
+      const x = (e.gamma || 0) / 45;
       const y = (e.beta || 0) / 45;
       setTilt({ x: Math.max(-1, Math.min(1, x)), y: Math.max(-1, Math.min(1, y - 0.5)) });
     };

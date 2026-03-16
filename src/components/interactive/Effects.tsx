@@ -295,8 +295,8 @@ export function ScrollProgressBar() {
 
   return (
     <motion.div
-      style={{ scaleX, transformOrigin: 'left' }}
-      className="fixed bottom-0 left-0 right-0 h-[2px] bg-nc-gold z-[150]"
+      style={{ scaleX, transformOrigin: 'left', bottom: 'env(safe-area-inset-bottom, 0px)' }}
+      className="fixed left-0 right-0 h-[2px] bg-nc-gold z-[150]"
     />
   );
 }
