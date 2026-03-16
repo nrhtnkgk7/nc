@@ -176,14 +176,14 @@ export default function RestaurantModal({ restaurant, onClose }: { restaurant: R
                 <div className="bg-nc-charcoal/95 rounded-b px-5 md:px-8 py-6 md:py-8 relative"
                   style={{ paddingBottom: 'max(32px, env(safe-area-inset-bottom))' }}>
 
-                  {/* Mobile scroll hint */}
+                  {/* Scroll hint — all screens */}
                   <AnimatePresence>
                     {showScrollHint && (
                       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                        className="md:hidden absolute top-0 left-1/2 -translate-x-1/2 -translate-y-6 flex flex-col items-center z-[10]">
+                        className="flex flex-col items-center py-4">
                         <motion.div animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}
-                          className="w-4 h-4 border-b border-r border-nc-gold/40 rotate-45" />
-                        <span className="font-ui text-[7px] tracking-[2px] text-nc-gold/30 mt-1">SCROLL</span>
+                          className="w-3.5 h-3.5 border-b border-r border-nc-gold/40 rotate-45" />
+                        <span className="font-ui text-[7px] tracking-[2px] text-nc-gold/30 mt-2">SCROLL</span>
                       </motion.div>
                     )}
                   </AnimatePresence>

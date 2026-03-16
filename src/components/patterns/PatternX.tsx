@@ -77,7 +77,7 @@ export default function PatternX() {
   const closeChefModal = useCallback(() => setSelectedChef(null), []);
 
   return (
-    <div className="snap-container">
+    <div>
       <ScrollProgressBar />
       <BackToTop />
       <RestaurantModal restaurant={selectedRestaurant} onClose={closeModal} />

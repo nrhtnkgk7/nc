@@ -9,6 +9,7 @@
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior: none;
     scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
   }
   body {
     @apply bg-nc-black text-nc-pearl;
@@ -21,10 +22,7 @@
   }
 }
 
-/* Section snap — gentle proximity mode */
-.snap-container {
-  scroll-snap-type: y proximity;
-}
+/* Section snap */
 .snap-section {
   scroll-snap-align: start;
 }
@@ -110,7 +108,7 @@
   .reveal-up, .reveal-left, .reveal-right, .reveal-scale { transition-duration: 0.01s; }
   .reveal-clip { transition-duration: 0.01s; }
   .grain-overlay { display: none; }
-  html { scroll-behavior: auto; scroll-snap-type: none; }
+  html { scroll-behavior: auto !important; scroll-snap-type: none !important; }
 }
 
 /* Mobile perf — limit animated orbs */
