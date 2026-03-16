@@ -167,21 +167,21 @@ export default function RestaurantModal({ restaurant, onClose }: { restaurant: R
                   </motion.div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-6">
-                    {[
-                      restaurant.address && { label: 'ADDRESS', value: restaurant.address },
-                      restaurant.hours && { label: 'HOURS', value: restaurant.hours },
-                      restaurant.phone && { label: 'PHONE', value: restaurant.phone },
-                      restaurant.access && { label: 'ACCESS', value: restaurant.access },
-                      restaurant.seats && { label: 'SEATS', value: restaurant.seats },
-                      restaurant.style && { label: 'STYLE', value: restaurant.style },
-                    ].filter(Boolean).map((item, i) => (
+                    {([
+                      restaurant.address ? { label: 'ADDRESS', value: restaurant.address } : null,
+                      restaurant.hours ? { label: 'HOURS', value: restaurant.hours } : null,
+                      restaurant.phone ? { label: 'PHONE', value: restaurant.phone } : null,
+                      restaurant.access ? { label: 'ACCESS', value: restaurant.access } : null,
+                      restaurant.seats ? { label: 'SEATS', value: restaurant.seats } : null,
+                      restaurant.style ? { label: 'STYLE', value: restaurant.style } : null,
+                    ].filter((x): x is { label: string; value: string } => x !== null)).map((item, i) => (
                       <motion.div key={i}
                         initial={{ x: i % 2 === 0 ? -25 : 25, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ delay: 0.6 + i * 0.08, duration: 0.6 }}
                         className="py-3 border-b border-white/[.03]">
-                        <div className="font-ui text-[7px] md:text-[8px] tracking-[3px] uppercase text-nc-gold/40 mb-2">{item!.label}</div>
-                        <p className="font-light text-[clamp(12px,3vw,14px)] text-nc-silver/65 leading-[1.9] whitespace-pre-line">{item!.value}</p>
+                        <div className="font-ui text-[7px] md:text-[8px] tracking-[3px] uppercase text-nc-gold/40 mb-2">{item.label}</div>
+                        <p className="font-light text-[clamp(12px,3vw,14px)] text-nc-silver/65 leading-[1.9] whitespace-pre-line">{item.value}</p>
                       </motion.div>
                     ))}
                   </div>
