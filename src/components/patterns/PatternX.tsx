@@ -9,7 +9,6 @@ import MagneticButton from '@/components/interactive/MagneticButton';
 import TextScramble from '@/components/interactive/TextScramble';
 import RestaurantModal from '@/components/interactive/RestaurantModal';
 import ChefModal from '@/components/interactive/ChefModal';
-import ScrollCheckpoint from '@/components/interactive/ScrollCheckpoint';
 
 function SlideIn({ children, from = 'left', delay = 0, className = '' }: {
   children: React.ReactNode; from?: 'left' | 'right'; delay?: number; className?: string;
@@ -81,12 +80,11 @@ export default function PatternX() {
     <div>
       <ScrollProgressBar />
       <BackToTop />
-      <ScrollCheckpoint />
       <RestaurantModal restaurant={selectedRestaurant} onClose={closeModal} />
       <ChefModal chef={selectedChef} onClose={closeChefModal} />
 
       {/* HERO */}
-      <section ref={heroRef} className="h-svh relative flex items-center justify-center overflow-hidden" data-snap>
+      <section ref={heroRef} className="h-svh relative flex items-center justify-center overflow-hidden">
         <motion.div style={{ y: heroY, scale: heroScale }} className="absolute inset-0 z-0 bg-[url('/images/hero.jpg')] bg-cover bg-center">
           <div className="absolute inset-0 bg-gradient-to-b from-nc-black/15 via-nc-black/25 to-nc-black/70" />
         </motion.div>
@@ -119,7 +117,7 @@ export default function PatternX() {
       <Marquee text="NO CODE — WHERE FOOD MEETS FUTURE — CHEF+ — 食で未来を創る — NO CODE — WHERE FOOD MEETS FUTURE — CHEF+ — 食で未来を創る —" sub="Private Dining — Tokyo — Taipei — Bistro — Lamb Specialty — Chef+ —" speed={18} />
 
       {/* ABOUT */}
-      <section id="about" className="relative py-20 md:py-40 overflow-hidden scroll-mt-16" data-snap>
+      <section id="about" className="relative py-20 md:py-40 overflow-hidden scroll-mt-16">
         <div className="absolute inset-0 pointer-events-none">
           <div className="mesh-orb w-[60vw] h-[60vw] top-[10%] right-[-20%] bg-nc-gold/[.08]" />
         </div>
@@ -134,7 +132,7 @@ export default function PatternX() {
       <Marquee text="FUMIO YONEZAWA — AKINORI HISAMATSU — JEAN-GEORGES — THE BURN —" sub="Owner Chef — Head Chef — Sustainability — Vegan Recipes —" speed={15} />
 
       {/* CHEF */}
-      <section id="chef" className="relative py-20 md:py-32 overflow-hidden scroll-mt-16" data-snap>
+      <section id="chef" className="relative py-20 md:py-32 overflow-hidden scroll-mt-16">
         <div className="relative z-[2] max-w-[600px] md:max-w-[1100px] mx-auto px-5 md:px-6">
           <Reveal><div className="font-ui text-[10px] tracking-[5px] uppercase text-nc-gold mb-3">Chef</div><h2 className="font-bebas text-[clamp(40px,10vw,64px)] text-nc-white tracking-[.06em] mb-8 md:mb-16">OUR CHEFS</h2></Reveal>
           <div className="flex flex-col md:flex-row gap-4 md:gap-5">
@@ -146,7 +144,7 @@ export default function PatternX() {
       <Marquee text="NO CODE 西麻布 — NY BISTRO — HITSUJI PUBLIC — NO CODE TAIPEI —" sub="Nishiazabu — Shibuya — Taipei Da'an —" speed={20} />
 
       {/* RESTAURANT */}
-      <section id="restaurant" className="relative py-20 md:py-32 overflow-hidden scroll-mt-16" data-snap>
+      <section id="restaurant" className="relative py-20 md:py-32 overflow-hidden scroll-mt-16">
         <div className="relative z-[2] px-5 md:px-6 max-w-[600px] md:max-w-[1100px] mx-auto">
           <Reveal><div className="font-ui text-[10px] tracking-[5px] uppercase text-nc-gold mb-3">Restaurant</div><h2 className="font-bebas text-[clamp(40px,10vw,64px)] text-nc-white tracking-[.06em] mb-8 md:mb-14">OUR RESTAURANTS</h2></Reveal>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3" style={!isMobile ? { transform: `perspective(800px) rotateX(${Math.min(velocity * 3, 2)}deg)`, transition: 'transform 0.2s linear' } : {}}>
@@ -156,7 +154,7 @@ export default function PatternX() {
       </section>
 
       {/* PROJECT */}
-      <section id="project" className="relative py-20 md:py-32 overflow-hidden scroll-mt-16" data-snap>
+      <section id="project" className="relative py-20 md:py-32 overflow-hidden scroll-mt-16">
         <div className="relative z-[2] max-w-[600px] md:max-w-[1100px] mx-auto px-5 md:px-6">
           <Reveal><div className="font-ui text-[10px] tracking-[5px] uppercase text-nc-gold mb-3">Project</div><h2 className="font-bebas text-[clamp(40px,10vw,64px)] text-nc-white tracking-[.06em] mb-8 md:mb-14">PROJECTS</h2></Reveal>
           <div className="flex flex-col gap-3 md:gap-4">
@@ -166,7 +164,7 @@ export default function PatternX() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="relative py-20 md:py-32 overflow-hidden scroll-mt-16" data-snap>
+      <section id="contact" className="relative py-20 md:py-32 overflow-hidden scroll-mt-16">
         <div className="relative z-[2] max-w-[500px] mx-auto px-5 md:px-6 text-center">
           <Reveal>
             <div className="font-ui text-[10px] tracking-[5px] uppercase text-nc-gold mb-3">Contact</div>

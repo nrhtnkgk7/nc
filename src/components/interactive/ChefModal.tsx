@@ -88,11 +88,11 @@ export default function ChefModal({ chef, onClose }: { chef: Chef | null; onClos
     <AnimatePresence>
       {chef && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }} className="fixed inset-0 z-[200]">
+          transition={{ duration: 0.5 }} className="fixed inset-0 z-[200]">
           <div className="fixed inset-0 bg-nc-black/[.97]" onClick={onClose} />
 
           <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: isRevealed ? 1 : 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
             className="fixed top-1/2 left-0 right-0 h-[1px] bg-nc-gold/30 origin-left z-[1] pointer-events-none" />
 
           {/* Scroll container - key fix: explicit height */}
@@ -103,7 +103,7 @@ export default function ChefModal({ chef, onClose }: { chef: Chef | null; onClos
             {/* Sticky close */}
             <div className="sticky top-0 z-[20] flex justify-end p-3 pointer-events-none" style={{ paddingTop: 'max(12px, env(safe-area-inset-top))' }}>
               <motion.button initial={{ opacity: 0, rotate: -90 }} animate={{ opacity: 1, rotate: 0 }}
-                transition={{ delay: 0.6, duration: 0.5 }}
+                transition={{ delay: 1, duration: 0.7 }}
                 onClick={onClose}
                 className="pointer-events-auto w-11 h-11 flex items-center justify-center rounded-full bg-nc-black/80 border border-nc-gold/15 active:bg-nc-gold/20 hover:border-nc-gold/40 transition-all duration-300"
                 aria-label="Close">
@@ -115,8 +115,8 @@ export default function ChefModal({ chef, onClose }: { chef: Chef | null; onClos
               <motion.div
                 initial={{ clipPath: 'inset(50% 0 50% 0)' }}
                 animate={{ clipPath: isRevealed ? 'inset(0% 0 0% 0)' : 'inset(50% 0 50% 0)' }}
-                exit={{ clipPath: 'inset(50% 0 50% 0)', transition: { duration: 0.4 } }}
-                transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                exit={{ clipPath: "inset(50% 0 50% 0)", transition: { duration: 0.6 } }}
+                transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 className="w-full max-w-[720px] mt-14"
                 onClick={(e) => e.stopPropagation()}>
 
@@ -130,7 +130,7 @@ export default function ChefModal({ chef, onClose }: { chef: Chef | null; onClos
                         initial={{ scale: 1.15, opacity: 0, filter: 'brightness(2) saturate(0)' }}
                         animate={{ scale: 1, opacity: 1, filter: 'brightness(1) saturate(1)' }}
                         exit={{ scale: 0.98, opacity: 0 }}
-                        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
                         className="absolute inset-0">
                         {chef.gallery[imgIndex]?.src ? (
                           <img src={chef.gallery[imgIndex].src} alt={chef.gallery[imgIndex].alt} className="w-full h-full object-cover object-top" draggable={false} />
@@ -172,7 +172,7 @@ export default function ChefModal({ chef, onClose }: { chef: Chef | null; onClos
                     </div>
                   )}
 
-                  <motion.div initial={{ x: -30, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.6 }}
+                  <motion.div initial={{ x: -30, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.9, duration: 0.8 }}
                     className="absolute top-3 left-3 z-[5]">
                     <span className="font-ui text-[7px] md:text-[8px] tracking-[3px] uppercase text-nc-gold bg-nc-black/70 px-3 py-1.5 border-l-2 border-nc-gold/50">{chef.role}</span>
                   </motion.div>
@@ -194,30 +194,30 @@ export default function ChefModal({ chef, onClose }: { chef: Chef | null; onClos
                     )}
                   </AnimatePresence>
 
-                  <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5, duration: 0.7 }} className="mb-6">
+                  <motion.div initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.8, duration: 1 }} className="mb-6">
                     <h2 className="font-bebas text-[clamp(28px,8vw,50px)] text-nc-white tracking-[.04em] leading-tight"><GlitchText text={chef.name} /></h2>
                     <p className="text-[13px] md:text-[14px] text-nc-silver/60 mt-1 tracking-[3px]">{chef.nameJp}</p>
                   </motion.div>
 
                   {chef.philosophy && (
-                    <motion.div initial={{ x: -40, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.65 }} className="mb-8 pl-4 border-l-2 border-nc-gold/25">
+                    <motion.div initial={{ x: -50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 1.1, duration: 0.9 }} className="mb-8 pl-4 border-l-2 border-nc-gold/25">
                       <p className="font-light text-[clamp(13px,3.5vw,17px)] text-nc-gold/50 leading-[2] italic">「{chef.philosophy}」</p>
                     </motion.div>
                   )}
 
-                  <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.75 }} className="mb-8">
+                  <motion.div initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.4, duration: 0.9 }} className="mb-8">
                     <h3 className="font-ui text-[9px] tracking-[4px] uppercase text-nc-gold/40 mb-4">BIOGRAPHY</h3>
                     <div className="font-light text-[clamp(13px,3.5vw,15px)] text-nc-silver/70 leading-[2.4] whitespace-pre-line">{chef.longBio}</div>
                   </motion.div>
 
                   {chef.career.length > 0 && (
-                    <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.85 }}>
+                    <motion.div initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.7, duration: 0.9 }}>
                       <h3 className="font-ui text-[9px] tracking-[4px] uppercase text-nc-gold/40 mb-5">CAREER</h3>
                       <div className="relative">
                         <div className="absolute left-[24px] md:left-[36px] top-2 bottom-2 w-[1px] bg-nc-gold/[.06]" />
                         {chef.career.map((item, i) => (
-                          <motion.div key={i} initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }}
-                            transition={{ delay: 0.9 + i * 0.06, duration: 0.5 }}
+                          <motion.div key={i} initial={{ x: -25, opacity: 0 }} animate={{ x: 0, opacity: 1 }}
+                            transition={{ delay: 1.9 + i * 0.1, duration: 0.7 }}
                             className="flex gap-3 md:gap-5 mb-4 last:mb-0 relative">
                             <div className="flex-shrink-0 w-[48px] md:w-[72px] text-right pr-2 md:pr-4 pt-0.5">
                               <span className="font-bebas text-[clamp(13px,3.5vw,17px)] text-nc-gold/25">{item.year}</span>

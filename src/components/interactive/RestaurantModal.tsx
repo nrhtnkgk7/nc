@@ -84,7 +84,7 @@ export default function RestaurantModal({ restaurant, onClose }: { restaurant: R
           <div className="fixed inset-0 bg-nc-black/[.97]" onClick={onClose} />
 
           <motion.div initial={{ scaleY: 0 }} animate={{ scaleY: isRevealed ? 1 : 0 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="fixed left-1/2 top-0 bottom-0 w-[1px] bg-nc-gold/20 origin-top z-[1] pointer-events-none" />
 
           {/* Scroll container - explicit height fix */}
@@ -95,7 +95,7 @@ export default function RestaurantModal({ restaurant, onClose }: { restaurant: R
             {/* Sticky close */}
             <div className="sticky top-0 z-[20] flex justify-end p-3 pointer-events-none" style={{ paddingTop: 'max(12px, env(safe-area-inset-top))' }}>
               <motion.button initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6, duration: 0.4 }}
+                transition={{ delay: 1, duration: 0.6 }}
                 onClick={onClose}
                 className="pointer-events-auto w-11 h-11 flex items-center justify-center rounded-full bg-nc-black/80 border border-nc-gold/15 active:bg-nc-gold/20 hover:border-nc-gold/40 transition-all duration-300"
                 aria-label="Close">
@@ -107,8 +107,8 @@ export default function RestaurantModal({ restaurant, onClose }: { restaurant: R
               <motion.div
                 initial={{ clipPath: 'inset(0 50% 0 50%)' }}
                 animate={{ clipPath: isRevealed ? 'inset(0 0% 0 0%)' : 'inset(0 50% 0 50%)' }}
-                exit={{ clipPath: 'inset(0 50% 0 50%)', transition: { duration: 0.4 } }}
-                transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                exit={{ clipPath: 'inset(0 50% 0 50%)', transition: { duration: 0.6 } }}
+                transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 className="w-full max-w-[700px] mt-14"
                 onClick={(e) => e.stopPropagation()}>
 
@@ -122,7 +122,7 @@ export default function RestaurantModal({ restaurant, onClose }: { restaurant: R
                         initial={{ scale: 1.3, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.95, opacity: 0, filter: 'brightness(0.3)' }}
-                        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
                         className="absolute inset-0">
                         {restaurant.gallery[galleryIndex]?.src ? (
                           <img src={restaurant.gallery[galleryIndex].src} alt={restaurant.gallery[galleryIndex].alt} className="w-full h-full object-cover" draggable={false} />
@@ -166,7 +166,7 @@ export default function RestaurantModal({ restaurant, onClose }: { restaurant: R
                     </div>
                   )}
 
-                  <motion.div initial={{ x: -30, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.5 }}
+                  <motion.div initial={{ x: -30, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.8, duration: 0.8 }}
                     className="absolute top-3 left-3 z-[5]">
                     <span className="font-ui text-[7px] md:text-[8px] tracking-[3px] uppercase text-nc-gold bg-nc-black/70 px-3 py-1.5 border-l-2 border-nc-gold/50">{restaurant.tag}</span>
                   </motion.div>
@@ -188,12 +188,12 @@ export default function RestaurantModal({ restaurant, onClose }: { restaurant: R
                     )}
                   </AnimatePresence>
 
-                  <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.45, duration: 0.7 }} className="mb-6">
+                  <motion.div initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.7, duration: 1 }} className="mb-6">
                     <h2 className="font-bebas text-[clamp(26px,7vw,44px)] text-nc-white tracking-[.04em] leading-tight">{restaurant.name}</h2>
                     <p className="text-[12px] md:text-[13px] text-nc-silver/50 mt-1 tracking-wider">{restaurant.sub}</p>
                   </motion.div>
 
-                  <motion.div initial={{ y: 25, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.55 }} className="mb-8">
+                  <motion.div initial={{ y: 35, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1, duration: 0.9 }} className="mb-8">
                     <p className="font-light text-[clamp(13px,3.5vw,15px)] text-nc-silver/75 leading-[2.2]">{restaurant.longDesc || restaurant.desc}</p>
                   </motion.div>
 
@@ -207,9 +207,9 @@ export default function RestaurantModal({ restaurant, onClose }: { restaurant: R
                       restaurant.style ? { label: 'STYLE', value: restaurant.style } : null,
                     ].filter((x): x is { label: string; value: string } => x !== null)).map((item, i) => (
                       <motion.div key={i}
-                        initial={{ x: i % 2 === 0 ? -25 : 25, opacity: 0 }}
+                        initial={{ x: i % 2 === 0 ? -30 : 30, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
-                        transition={{ delay: 0.6 + i * 0.08, duration: 0.6 }}
+                        transition={{ delay: 1.3 + i * 0.12, duration: 0.8 }}
                         className="py-3 border-b border-white/[.03]">
                         <div className="font-ui text-[7px] md:text-[8px] tracking-[3px] uppercase text-nc-gold/40 mb-2">{item.label}</div>
                         <p className="font-light text-[clamp(12px,3vw,14px)] text-nc-silver/65 leading-[1.9] whitespace-pre-line">{item.value}</p>
@@ -218,12 +218,12 @@ export default function RestaurantModal({ restaurant, onClose }: { restaurant: R
                   </div>
 
                   {restaurant.note && (
-                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
+                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}
                       className="text-[clamp(11px,2.8vw,13px)] text-nc-gold/40 leading-[2] mt-4 pt-4 border-t border-white/[.03]">{restaurant.note}</motion.p>
                   )}
 
                   {restaurant.link && (
-                    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }}
+                    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.2, duration: 0.8 }}
                       className="mt-6 pt-4 border-t border-white/[.03]">
                       <a href={restaurant.link}
                         className="inline-flex items-center gap-2 font-ui text-[10px] tracking-[3px] uppercase text-nc-gold/60 hover:text-nc-gold active:text-nc-gold transition-colors">
