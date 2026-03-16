@@ -63,22 +63,18 @@ export default function MagneticScroll({ selectors = '[data-snap]' }: { selector
 
       const targets = document.querySelectorAll(selectors);
       const scrollTop = window.scrollY;
-      const magnetRange = 180; // px — how far away a section can "pull" you in
+      const magnetRange = 180;
 
-      let closest: { el: Element; dist: number; top: number } | null = null;
-
-      targets.forEach((el) => {
+      const snapTargets = Array.from(targets).map((el) => {
         const rect = el.getBoundingClientRect();
         const elTop = rect.top + scrollTop;
         const dist = Math.abs(scrollTop - elTop);
+        return { el, dist, top: elTop };
+      }).filter(t => t.dist < magnetRange);
 
-        // Only consider sections within magnet range of current scroll
-        if (dist < magnetRange) {
-          if (!closest || dist < closest.dist) {
-            closest = { el, dist, top: elTop };
-          }
-        }
-      });
+      const closest = snapTargets.length > 0
+        ? snapTargets.reduce((a, b) => a.dist < b.dist ? a : b)
+        : null;
 
       if (closest && closest.dist > 3) {
         // Snap to it
