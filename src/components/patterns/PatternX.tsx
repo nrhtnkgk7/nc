@@ -9,7 +9,7 @@ import MagneticButton from '@/components/interactive/MagneticButton';
 import TextScramble from '@/components/interactive/TextScramble';
 import RestaurantModal from '@/components/interactive/RestaurantModal';
 import ChefModal from '@/components/interactive/ChefModal';
-import MagneticScroll from '@/components/interactive/MagneticScroll';
+import ScrollCheckpoint from '@/components/interactive/ScrollCheckpoint';
 
 function SlideIn({ children, from = 'left', delay = 0, className = '' }: {
   children: React.ReactNode; from?: 'left' | 'right'; delay?: number; className?: string;
@@ -81,7 +81,7 @@ export default function PatternX() {
     <div>
       <ScrollProgressBar />
       <BackToTop />
-      <MagneticScroll />
+      <ScrollCheckpoint />
       <RestaurantModal restaurant={selectedRestaurant} onClose={closeModal} />
       <ChefModal chef={selectedChef} onClose={closeChefModal} />
 
