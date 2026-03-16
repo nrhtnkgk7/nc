@@ -98,7 +98,7 @@ export default function ChefModal({ chef, onClose }: { chef: Chef | null; onClos
           {/* Scroll container - key fix: explicit height */}
           <div ref={scrollRef}
             className="fixed inset-0 z-[3] overflow-y-auto overscroll-contain"
-            style={{ WebkitOverflowScrolling: 'touch', height: '100vh', height: '100dvh' } as any}>
+            style={{ WebkitOverflowScrolling: 'touch', height: '100dvh' }}>
 
             {/* Sticky close */}
             <div className="sticky top-0 z-[20] flex justify-end p-3 pointer-events-none" style={{ paddingTop: 'max(12px, env(safe-area-inset-top))' }}>
