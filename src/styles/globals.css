@@ -8,6 +8,7 @@
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior: none;
+    scroll-behavior: smooth;
   }
   body {
     @apply bg-nc-black text-nc-pearl;
@@ -20,11 +21,13 @@
   }
 }
 
-/* Lenis smooth scroll */
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: hidden; }
+/* Section snap — gentle proximity mode */
+.snap-container {
+  scroll-snap-type: y proximity;
+}
+.snap-section {
+  scroll-snap-align: start;
+}
 
 /* Film grain overlay */
 .grain-overlay {
@@ -37,7 +40,6 @@ html.lenis, html.lenis body { height: auto; }
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
   background-repeat: repeat;
 }
-/* Disable grain on low-perf mobile */
 @media (max-width: 768px) and (prefers-reduced-motion: reduce) {
   .grain-overlay { display: none; }
 }
@@ -102,15 +104,16 @@ html.lenis, html.lenis body { height: auto; }
   100% { transform: translate(4%, -4%) scale(1.04); }
 }
 
-/* Reduce motion for accessibility & performance */
+/* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
   .mesh-orb { animation: none; }
   .reveal-up, .reveal-left, .reveal-right, .reveal-scale { transition-duration: 0.01s; }
   .reveal-clip { transition-duration: 0.01s; }
   .grain-overlay { display: none; }
+  html { scroll-behavior: auto; scroll-snap-type: none; }
 }
 
-/* Reduce GPU load on mobile: max 2 orbs animate */
+/* Mobile perf — limit animated orbs */
 @media (max-width: 768px) {
   .mesh-orb:nth-child(n+3) { animation: none; opacity: 0.5; }
 }

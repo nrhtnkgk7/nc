@@ -1,24 +1,13 @@
 'use client';
 
-import { useEffect, useRef, ReactNode, useState, useCallback } from 'react';
-import Lenis from 'lenis';
+import { useEffect, useRef, ReactNode, useState } from 'react';
 
-// ===== Lenis Provider =====
+// ===== Smooth Scroll Provider (native, no Lenis) =====
 export function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      touchMultiplier: 1.5,
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    return () => lenis.destroy();
+    // Enable native smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+    return () => { document.documentElement.style.scrollBehavior = ''; };
   }, []);
 
   return <>{children}</>;
