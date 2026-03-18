@@ -9,6 +9,7 @@ import MagneticButton from '@/components/interactive/MagneticButton';
 import TextScramble from '@/components/interactive/TextScramble';
 import RestaurantModal from '@/components/interactive/RestaurantModal';
 import ChefModal from '@/components/interactive/ChefModal';
+import ContactModal from '@/components/interactive/ContactModal';
 
 function SlideIn({ children, from = 'left', delay = 0, className = '' }: {
   children: React.ReactNode; from?: 'left' | 'right'; delay?: number; className?: string;
@@ -75,6 +76,7 @@ export default function PatternX() {
   useEffect(() => { setTimeout(() => setMounted(true), 300); }, []);
   const closeModal = useCallback(() => setSelectedRestaurant(null), []);
   const closeChefModal = useCallback(() => setSelectedChef(null), []);
+  const [showContact, setShowContact] = useState(false);
 
   return (
     <div>
@@ -82,6 +84,7 @@ export default function PatternX() {
       <BackToTop />
       <RestaurantModal restaurant={selectedRestaurant} onClose={closeModal} />
       <ChefModal chef={selectedChef} onClose={closeChefModal} />
+      <ContactModal isOpen={showContact} onClose={() => setShowContact(false)} />
 
       {/* HERO */}
       <section ref={heroRef} className="h-svh relative flex items-center justify-center overflow-hidden">
@@ -114,7 +117,7 @@ export default function PatternX() {
         </MagneticButton>
       </section>
 
-      <Marquee text="NO CODE — WHERE FOOD MEETS FUTURE — CHEF+ — 食で未来を創る — NO CODE — WHERE FOOD MEETS FUTURE — CHEF+ — 食で未来を創る —" sub="Private Dining — Tokyo — Taipei — Bistro — Lamb Specialty — Chef+ —" speed={18} />
+      <Marquee text="NO CODE — WHERE FOOD MEETS FUTURE — CHEF+ — 食で未来を創る — NO CODE — WHERE FOOD MEETS FUTURE — CHEF+ — 食で未来を創る —" sub="Private Dining — Tokyo — Bistro — Lamb Specialty — Chef+ —" speed={18} />
 
       {/* ABOUT */}
       <section id="about" className="relative py-20 md:py-40 overflow-hidden scroll-mt-16">
@@ -141,7 +144,7 @@ export default function PatternX() {
         </div>
       </section>
 
-      <Marquee text="NO CODE 西麻布 — NY BISTRO — HITSUJI PUBLIC — NO CODE TAIPEI —" sub="Nishiazabu — Shibuya — Taipei Da'an —" speed={20} />
+      <Marquee text="NO CODE 西麻布 — NY BISTRO — HITSUJI PUBLIC —" sub="Nishiazabu — Marunouchi — Toranomon —" speed={20} />
 
       {/* RESTAURANT */}
       <section id="restaurant" className="relative py-20 md:py-32 overflow-hidden scroll-mt-16">
@@ -173,7 +176,7 @@ export default function PatternX() {
           </Reveal>
           <Reveal delay={0.2}>
             <MagneticButton strength={0.3}>
-              <button className="font-ui text-[10px] tracking-[4px] uppercase text-nc-white border border-nc-gold/30 px-8 md:px-10 py-4 hover:bg-nc-gold/10 active:bg-nc-gold/15 transition-colors duration-500">CONTACT US</button>
+              <button onClick={() => setShowContact(true)} className="font-ui text-[10px] tracking-[4px] uppercase text-nc-white border border-nc-gold/30 px-8 md:px-10 py-4 hover:bg-nc-gold/10 active:bg-nc-gold/15 transition-colors duration-500">CONTACT US</button>
             </MagneticButton>
           </Reveal>
         </div>
@@ -276,7 +279,9 @@ function RestCard({ restaurant: r, index: i, onSelect }: { restaurant: Restauran
         <motion.div whileTap={{ scale: 0.95 }} className="bg-white/[.02] rounded overflow-hidden relative cursor-pointer group"
           onClick={handleClick} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
           <div className={`h-[clamp(120px,26vw,200px)] ${r.image} relative overflow-hidden`}>
-            <motion.div animate={{ scale: hovered ? 1.06 : 1 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="absolute inset-0 bg-inherit" />
+            <motion.div animate={{ scale: hovered ? 1.06 : 1 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="absolute inset-0">
+              {r.gallery[0]?.src && <img src={r.gallery[0].src} alt={r.name} className="w-full h-full object-cover" />}
+            </motion.div>
             <span className="absolute bottom-2 left-3 font-bebas text-[28px] md:text-[32px] text-white/[.04] relative z-[1]">{String(i + 1).padStart(2, '0')}</span>
             <div className="absolute inset-0 bg-gradient-to-t from-nc-black/40 to-transparent z-[1]" />
             <div className="absolute inset-0 z-[2] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500"><span className="font-ui text-[8px] tracking-[3px] uppercase text-nc-white bg-nc-black/50 backdrop-blur-sm px-3 py-1.5 rounded-sm">VIEW</span></div>

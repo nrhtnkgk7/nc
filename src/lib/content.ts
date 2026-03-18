@@ -189,27 +189,6 @@ export const restaurants: Restaurant[] = [
       { src: '/test/images/hitsupub8.jpg', alt: '外観' },
     ],
   },
-  {
-    name: 'NO CODE TAIPEI',
-    sub: '台北',
-    tag: 'Private Dining — Taipei',
-    slug: 'taipei',
-    desc: 'No Codeの哲学を台北へ。2026年4月オープン。',
-    longDesc: '東京・西麻布で生まれたNo Codeの哲学が、台北に上陸。日本の精緻な技法と台湾の豊かな食材を融合させ、唯一無二の味覚体験を創造します。カウンター席のおまかせスタイルで、季節ごとに変わる台湾食材の新たな可能性をお届けします。',
-    address: '台北市大安區安和路一段（詳細確認中）',
-    hours: 'Omakase 18:00–21:00\nÀ la carte 21:15–23:00\n定休日：月曜日',
-    phone: '+886-2-XXXX-XXXX',
-    access: '捷運信義安和站 徒歩約5分',
-    seats: 'カウンター10席',
-    style: 'おまかせ / アラカルト',
-    note: '※ 2026年4月オープン予定。',
-    image: 'bg-gradient-to-br from-[#0a1520] via-[#1a2a3a] to-[#050a12]',
-    gallery: [
-      { src: '/test/images/taipei-hero.jpg', alt: '台北イメージ' },
-      { src: '', alt: '店内イメージ' },
-    ],
-    link: '/test/taipei',
-  },
 ];
 
 export const projects = [

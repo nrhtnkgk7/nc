@@ -9,7 +9,6 @@ const mainMenuItems = [
   { label: 'RESTAURANT', href: '#restaurant' },
   { label: 'PROJECT', href: '#project' },
   { label: 'CONTACT', href: '#contact' },
-  { label: 'TAIPEI', href: '/test/taipei', isRoute: true },
 ];
 
 const taipeiMenuItems = [
@@ -76,8 +75,8 @@ export default function Header({ isTaipei = false }: { isTaipei?: boolean }) {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-5 md:px-10 h-14 transition-all duration-500 ${
-          scrolled ? 'bg-nc-black/90 backdrop-blur-xl' : 'bg-transparent'
+        className={`fixed top-0 left-0 right-0 z-[120] flex items-center justify-between px-5 md:px-10 h-14 transition-all duration-500 ${
+          isOpen ? 'bg-transparent' : scrolled ? 'bg-nc-black/90 backdrop-blur-xl' : 'bg-transparent'
         }`}
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
@@ -86,7 +85,7 @@ export default function Header({ isTaipei = false }: { isTaipei?: boolean }) {
           onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           className="font-bebas text-lg tracking-[4px] text-nc-white no-underline flex items-baseline gap-2"
         >
-          <img src="/test/images/logo.png" alt="NO CODE" className="h-[18px] w-auto" />
+          <img src="/test/images/logo.png" alt="NO CODE" className="h-[36px] w-auto" />
           {isTaipei && <span className="font-ui text-[8px] tracking-[3px] text-nc-tw-gold/60">TAIPEI</span>}
         </a>
         <button
@@ -102,7 +101,7 @@ export default function Header({ isTaipei = false }: { isTaipei?: boolean }) {
       <AnimatePresence>
         {isOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[99] bg-nc-black/[.98] flex items-center justify-center">
+            className="fixed inset-0 z-[110] bg-nc-black/[.98] flex items-center justify-center">
             <nav className="text-center flex flex-col">
               {menuItems.map((item, i) => (
                 <motion.a key={item.label} href={item.href}

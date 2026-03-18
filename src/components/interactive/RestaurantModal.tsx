@@ -36,14 +36,14 @@ export default function RestaurantModal({ restaurant, onClose }: { restaurant: R
 
   useEffect(() => {
     if (!restaurant || restaurant.gallery.length <= 1) return;
-    timerRef.current = setInterval(() => setGalleryIndex(i => (i + 1) % restaurant.gallery.length), 4000);
+    timerRef.current = setInterval(() => setGalleryIndex(i => (i + 1) % restaurant.gallery.length), 1800);
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, [restaurant]);
 
   const goTo = useCallback((idx: number) => {
     if (!restaurant) return; setGalleryIndex(idx);
     if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => setGalleryIndex(i => (i + 1) % restaurant.gallery.length), 4000);
+    timerRef.current = setInterval(() => setGalleryIndex(i => (i + 1) % restaurant.gallery.length), 1800);
   }, [restaurant]);
 
   const handleSwipe = useCallback((_: any, info: PanInfo) => {
@@ -98,10 +98,10 @@ export default function RestaurantModal({ restaurant, onClose }: { restaurant: R
                   <div className="absolute inset-0 pointer-events-none">
                     <AnimatePresence mode="wait">
                       <motion.div key={galleryIndex}
-                        initial={{ scale: 1.3, opacity: 0 }}
+                        initial={{ scale: 1.15, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.95, opacity: 0, filter: 'brightness(0.3)' }}
-                        transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
+                        exit={{ scale: 0.97, opacity: 0, filter: 'brightness(0.3)' }}
+                        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                         className="absolute inset-0">
                         {restaurant.gallery[galleryIndex]?.src ? (
                           <img src={restaurant.gallery[galleryIndex].src} alt={restaurant.gallery[galleryIndex].alt} className="w-full h-full object-cover" draggable={false} />
