@@ -5,6 +5,7 @@ export const aboutItems = [
     body: 'Codeを直訳すると、規定、規制、暗号などの意味、また国番号を表す言葉。私たちは、"それら全てに捕らわれず、新しい価値を創造したい。" それが「NoCode」という言葉に込めた想いです。',
     image: 'bg-gradient-to-br from-[#2a1f14] via-[#4a3525] to-[#1a1410]',
     label: 'PHILOSOPHY',
+    photo: '/test/images/about1.jpg',
   },
   {
     num: '02',
@@ -12,6 +13,7 @@ export const aboutItems = [
     body: '常々自分が料理人として出来ることにチャレンジしていく中で想っていた事。それは料理人が料理をするだけでは無い、という事。「食」に関わる全てのコトをアップデートする為に「シェフ」以上の活動を通じ未来を創造したい。自分と社会の繋がりを体現する「+」に決意と覚悟を込めました。',
     image: 'bg-gradient-to-br from-[#1a2018] via-[#3a4a35] to-[#101a10]',
     label: 'CHEF+',
+    photo: '/test/images/about2.jpg',
   },
   {
     num: '03',
@@ -19,6 +21,7 @@ export const aboutItems = [
     body: '食が持っている力は大きい、人間誰しもが「食べる」ことを止めません。食べることからは誰も逃れられない、だからこそ「食」は未来を創るための最幸のツール。家族、友人を幸せにすることや、社会問題を解決することも出来ます。出来る事から始め、未来を創ることを止めない。',
     image: 'bg-gradient-to-br from-[#2a1a1a] via-[#4a2a25] to-[#1a1010]',
     label: 'FUTURE',
+    photo: '/test/images/about3.jpg',
   },
 ];
 
@@ -45,13 +48,12 @@ export const chefs: Chef[] = [
     longBio: '1980年東京浅草に生まれる。幼少期から食に強い関心を持ち、16歳で料理の道を志す。都内のフランス料理店で修業を積んだ後、22歳で単身渡米。ニューヨークのミシュラン三ツ星レストラン「Jean-Georges」にて、日本人として初めてスーシェフに抜擢される。\n\n帰国後は「Jean-Georges Tokyo」のシェフ・ド・キュイジーヌを務め、2018年に自身のレストラン「The Burn」をオープン。フランス料理をベースにしながらも、ジャンルの枠に捕らわれない自由な発想で料理を創造する。\n\n現在は「No Code」を主宰し、「Chef+」（シェフプラス）として料理人の枠を超えた活動を展開。サステナビリティ、フードロス問題、次世代の育成など、食を通じた社会貢献に力を注ぐ。ソムリエの視点も持ち合わせ、独自のペアリングも監修。2026年には台北にも進出予定。',
     philosophy: '「食」は未来を創るための最幸のツール。規定に捕らわれず、新しい価値を創造し続ける。',
     image: 'bg-gradient-to-b from-[#16161e] via-[#2a2a38] to-[#0c0c14]',
-    photo: '/images/yonezawa.jpg',
+    photo: '/test/images/yonezawa.jpg',
     hugeName: 'YONEZAWA',
     gallery: [
-      { src: '/images/yonezawa.jpg', alt: '米澤文雄 ポートレート' },
-      { src: '', alt: '調理風景' },
-      { src: '', alt: 'Jean-Georges 時代' },
-      { src: '', alt: 'イベント登壇' },
+      { src: '/test/images/yonezawa.jpg', alt: '米澤文雄 ポートレート' },
+      { src: '/test/images/nocode1.jpg', alt: '調理風景' },
+      { src: '/test/images/nocode2.jpg', alt: 'No Code' },
     ],
     career: [
       { year: '1980', text: '東京都浅草に生まれる' },
@@ -75,12 +77,11 @@ export const chefs: Chef[] = [
     longBio: 'Jean-Georgesにて米澤に師事し、その後「The Burn」の立ち上げに参画。NYのミシュラン一つ星メキシカン「OXOMOCO」にてシェフに就任するなど、フレンチやメキシカン、アジアン、ヴィーガン、アメリカンと多彩なジャンルに精通。\n\nNo Code立ち上げと共にスーシェフに就任し、2025年6月よりシェフに抜擢。骨太なフレンチのキャリアをベースに、メキシカンとの融合を図る新ジャンル「メキシカンフレンチ」を米澤と共に創造。カウンター越しにゲスト一人ひとりとの距離を縮め、唯一無二のダイニング体験を提供する。',
     philosophy: '料理は対話。食材の声を聞き、ゲストの想いに応える。',
     image: 'bg-gradient-to-b from-[#1e1616] via-[#382a2a] to-[#140c0c]',
-    photo: '/images/hisamatsu.jpg',
+    photo: '/test/images/hisamatsu.jpg',
     hugeName: 'HISAMATSU',
     gallery: [
-      { src: '/images/hisamatsu.jpg', alt: '久松晃紀 ポートレート' },
-      { src: '', alt: 'カウンターでの調理' },
-      { src: '', alt: '食材の仕込み' },
+      { src: '/test/images/hisamatsu.jpg', alt: '久松晃紀 ポートレート' },
+      { src: '/test/images/nocode3.jpg', alt: 'カウンターでの調理' },
     ],
     career: [
       { year: '—', text: 'Jean-Georgesにて米澤に師事' },
@@ -128,10 +129,11 @@ export const restaurants: Restaurant[] = [
     note: '※ お子様は大人と同じ料理内容をお召し上がりいただける方のみ。ドレスコード：スマートカジュアル。',
     image: 'bg-gradient-to-br from-[#1a1510] via-[#3a3020] to-[#0a0808]',
     gallery: [
-      { src: '', alt: 'カウンター席' },
-      { src: '', alt: 'メキシカンフレンチ' },
-      { src: '', alt: 'ペアリング' },
-      { src: '', alt: '空間イメージ' },
+      { src: '/test/images/nocode1.jpg', alt: 'カウンター席' },
+      { src: '/test/images/nocode2.jpg', alt: 'メキシカンフレンチ' },
+      { src: '/test/images/nocode3.jpg', alt: 'ペアリング' },
+      { src: '/test/images/nocode4.jpg', alt: '空間イメージ' },
+      { src: '/test/images/nocode5.jpg', alt: '料理' },
     ],
   },
   {
@@ -150,9 +152,16 @@ export const restaurants: Restaurant[] = [
     note: '※ 個室あり・貸切可・テイクアウト対応・ベビーカー入店可・ベジタリアンメニューあり。',
     image: 'bg-gradient-to-br from-[#16161e] via-[#2a2a38] to-[#08080e]',
     gallery: [
-      { src: '', alt: '店内の雰囲気' },
-      { src: '', alt: 'ビストロ料理' },
-      { src: '', alt: 'ナチュラルワイン' },
+      { src: '/test/images/nybistro1.jpg', alt: '店内の雰囲気' },
+      { src: '/test/images/nybistro2.jpg', alt: 'ビストロ料理' },
+      { src: '/test/images/nybistro3.jpg', alt: 'ナチュラルワイン' },
+      { src: '/test/images/nybistro4.jpg', alt: '料理' },
+      { src: '/test/images/nybistro5.jpg', alt: 'テラス' },
+      { src: '/test/images/nybistro6.jpg', alt: '前菜' },
+      { src: '/test/images/nybistro7.jpg', alt: 'メイン' },
+      { src: '/test/images/nybistro8.jpg', alt: 'デザート' },
+      { src: '/test/images/nybistro9.jpg', alt: 'ランチ' },
+      { src: '/test/images/nybistro10.jpg', alt: 'ディナー' },
     ],
   },
   {
@@ -170,9 +179,14 @@ export const restaurants: Restaurant[] = [
     style: 'ラムビストロ / バーガー\nランチ ～¥1,800 / ディナー ～¥5,000',
     image: 'bg-gradient-to-br from-[#1e1510] via-[#3e2a18] to-[#0e0a06]',
     gallery: [
-      { src: '', alt: 'ラムチョップ' },
-      { src: '', alt: 'ラムバーガー' },
-      { src: '', alt: '店内' },
+      { src: '/test/images/hitsupub1.jpg', alt: 'ラムチョップ' },
+      { src: '/test/images/hitsupub2.jpg', alt: 'ラムバーガー' },
+      { src: '/test/images/hitsupub3.jpg', alt: '店内' },
+      { src: '/test/images/hitsupub4.jpg', alt: 'グリル' },
+      { src: '/test/images/hitsupub5.jpg', alt: 'ラム料理' },
+      { src: '/test/images/hitsupub6.jpg', alt: 'ドリンク' },
+      { src: '/test/images/hitsupub7.jpg', alt: 'T-MARKET' },
+      { src: '/test/images/hitsupub8.jpg', alt: '外観' },
     ],
   },
   {
@@ -191,10 +205,10 @@ export const restaurants: Restaurant[] = [
     note: '※ 2026年4月オープン予定。',
     image: 'bg-gradient-to-br from-[#0a1520] via-[#1a2a3a] to-[#050a12]',
     gallery: [
-      { src: '/images/taipei-hero.jpg', alt: '台北イメージ' },
+      { src: '/test/images/taipei-hero.jpg', alt: '台北イメージ' },
       { src: '', alt: '店内イメージ' },
     ],
-    link: '/taipei',
+    link: '/test/taipei',
   },
 ];
 

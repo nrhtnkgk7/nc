@@ -9,7 +9,7 @@ const mainMenuItems = [
   { label: 'RESTAURANT', href: '#restaurant' },
   { label: 'PROJECT', href: '#project' },
   { label: 'CONTACT', href: '#contact' },
-  { label: 'TAIPEI', href: '/taipei', isRoute: true },
+  { label: 'TAIPEI', href: '/test/taipei', isRoute: true },
 ];
 
 const taipeiMenuItems = [
@@ -18,7 +18,7 @@ const taipeiMenuItems = [
   { label: 'MENU', href: '#tp-menu' },
   { label: 'INFO', href: '#tp-info' },
   { label: 'CONTACT', href: '#tp-contact' },
-  { label: 'TOKYO', href: '/', isRoute: true },
+  { label: 'TOKYO', href: '/test/', isRoute: true },
 ];
 
 export default function Header({ isTaipei = false }: { isTaipei?: boolean }) {
@@ -82,11 +82,11 @@ export default function Header({ isTaipei = false }: { isTaipei?: boolean }) {
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
         <a
-          href={isTaipei ? '/taipei' : '/'}
+          href={isTaipei ? '/test/taipei' : '/test/'}
           onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           className="font-bebas text-lg tracking-[4px] text-nc-white no-underline flex items-baseline gap-2"
         >
-          NO CODE
+          <img src="/test/images/logo.png" alt="NO CODE" className="h-[18px] w-auto" />
           {isTaipei && <span className="font-ui text-[8px] tracking-[3px] text-nc-tw-gold/60">TAIPEI</span>}
         </a>
         <button

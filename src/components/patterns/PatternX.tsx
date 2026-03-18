@@ -85,7 +85,7 @@ export default function PatternX() {
 
       {/* HERO */}
       <section ref={heroRef} className="h-svh relative flex items-center justify-center overflow-hidden">
-        <motion.div style={{ y: heroY, scale: heroScale }} className="absolute inset-0 z-0 bg-[url('/images/hero.jpg')] bg-cover bg-center">
+        <motion.div style={{ y: heroY, scale: heroScale }} className="absolute inset-0 z-0 bg-[url('/test/images/hero.jpg')] bg-cover bg-center">
           <div className="absolute inset-0 bg-gradient-to-b from-nc-black/15 via-nc-black/25 to-nc-black/70" />
         </motion.div>
         <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
@@ -221,6 +221,7 @@ function AboutBlock({ item, index, velocity }: { item: typeof aboutItems[0]; ind
         <SlideIn from={fromDir} delay={0} className="mb-5 md:mb-0">
           <TiltCard intensity={6}>
             <div ref={imgRef} className={`h-[52vw] md:h-[400px] rounded overflow-hidden relative ${item.image}`}>
+              {item.photo && <img src={item.photo} alt={item.title} className="absolute inset-0 w-full h-full object-cover" />}
               <div className="absolute inset-0 flex items-center justify-center"><span className="font-bebas text-white/[.04] text-[80px] md:text-[140px]"><AnimatedCounter value={item.num} trigger={imgVisible} /></span></div>
               <div className="absolute bottom-3 right-4 font-ui text-[8px] tracking-[2px] text-white/10">{item.label}</div>
             </div>
