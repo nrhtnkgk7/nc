@@ -3,7 +3,13 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const mainMenuItems = [
+interface MenuItem {
+  label: string;
+  href: string;
+  isRoute?: boolean;
+}
+
+const mainMenuItems: MenuItem[] = [
   { label: 'ABOUT', href: '#about' },
   { label: 'CHEF', href: '#chef' },
   { label: 'RESTAURANT', href: '#restaurant' },
@@ -11,7 +17,7 @@ const mainMenuItems = [
   { label: 'CONTACT', href: '#contact' },
 ];
 
-const taipeiMenuItems = [
+const taipeiMenuItems: MenuItem[] = [
   { label: 'CONCEPT', href: '#tp-concept' },
   { label: 'CHEF', href: '#tp-chef' },
   { label: 'MENU', href: '#tp-menu' },
