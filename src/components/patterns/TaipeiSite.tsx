@@ -140,7 +140,7 @@ export default function TaipeiSite() {
       {/* ===== HERO ===== */}
       <section ref={heroRef} className="h-svh relative overflow-hidden">
         <motion.div style={{ scale: imgScale }} className="absolute inset-0 z-0">
-          <img src="/images/taipei-hero.jpg" alt="Taipei" className="w-full h-full object-cover" />
+          <img src="/test/images/taipei-hero.jpg" alt="Taipei" className="w-full h-full object-cover" />
         </motion.div>
         <motion.div style={{ opacity: overlayOpacity }} className="absolute inset-0 z-[1] bg-tp-bg" />
 
@@ -313,7 +313,7 @@ export default function TaipeiSite() {
               <p className="font-tc-serif font-light text-[11px] text-tp-mist/30 leading-[1.8]">{t.footer.tagline}</p>
             </div>
             <div className="flex items-center gap-8">
-              <a href="/" className="font-tc-serif text-[10px] tracking-[2px] text-tp-tea/25 hover:text-tp-tea/60 transition-colors duration-500">
+              <a href="/test/" className="font-tc-serif text-[10px] tracking-[2px] text-tp-tea/25 hover:text-tp-tea/60 transition-colors duration-500">
                 {t.footer.parent}
               </a>
               <a href="#" className="font-tc-serif text-[10px] tracking-[2px] text-tp-mist/20 hover:text-tp-tea/40 transition-colors">Instagram</a>
@@ -379,7 +379,7 @@ function ChefBand({ chef, index }: { chef: { name: string; nameLocal: string; ro
                 </div>
               ) : (
                 <>
-                  <img src="/images/yonezawa.jpg" alt={chef.nameLocal} className="absolute inset-0 w-full h-full object-cover object-[center_15%]" />
+                  <img src="/test/images/yonezawa1.jpg" alt={chef.nameLocal} className="absolute inset-0 w-full h-full object-cover object-[center_15%]" />
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent to-tp-bg/25" />
                 </>
               )}

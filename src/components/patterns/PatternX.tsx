@@ -144,7 +144,7 @@ export default function PatternX() {
         </div>
       </section>
 
-      <Marquee text="NO CODE 西麻布 — NY BISTRO — HITSUJI PUBLIC —" sub="Nishiazabu — Marunouchi — Toranomon —" speed={20} />
+      <Marquee text="NO CODE 西麻布 — NY BISTRO — HITSUJI PUBLIC — NO CODE TAIPEI —" sub="Nishiazabu — Marunouchi — Toranomon — Taipei —" speed={20} />
 
       {/* RESTAURANT */}
       <section id="restaurant" className="relative py-20 md:py-32 overflow-hidden scroll-mt-16">
