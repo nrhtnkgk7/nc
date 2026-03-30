@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Override config for static export
+      - name: Override config for /test/
         run: |
           cat > next.config.js << 'CONF'
           /** @type {import('next').NextConfig} */
@@ -32,12 +32,51 @@ jobs:
           module.exports = nextConfig;
           CONF
 
-      - name: Build
+      - name: Build test
         run: npm run build
 
-      - name: Upload artifact
+      - name: Upload test artifact
         uses: actions/upload-artifact@v4
         with:
-          name: static-site
+          name: static-site-test
+          path: out/
+          retention-days: 30
+
+  build-prod:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Remove /test/ prefix from all source files
+        run: |
+          find src -type f \( -name '*.ts' -o -name '*.tsx' \) -exec sed -i "s|/test/|/|g" {} +
+
+      - name: Override config for production (no basePath)
+        run: |
+          cat > next.config.js << 'CONF'
+          /** @type {import('next').NextConfig} */
+          const nextConfig = {
+            output: 'export',
+            images: { unoptimized: true },
+          };
+          module.exports = nextConfig;
+          CONF
+
+      - name: Build production
+        run: npm run build
+
+      - name: Upload production artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: static-site-prod
           path: out/
           retention-days: 30
